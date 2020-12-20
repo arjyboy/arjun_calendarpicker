@@ -1,0 +1,22 @@
+{
+  "name": "arjun_html2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjyboy/arjun_html2.git"
+  },
+  "author": "arjun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arjyboy/arjun_html2/issues"
+  },
+  "homepage": "https://github.com/arjyboy/arjun_html2#readme",
+  "dependencies": {
+    "lit-html": "^1.3.0"
+  }
+}
