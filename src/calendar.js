@@ -13,6 +13,7 @@ class Calendar extends HTMLElement {
   </style>
   <div class="container">
     ${this._getStateTemplate()}
+  
   </div>
   `;
 
@@ -65,9 +66,46 @@ class Calendar extends HTMLElement {
   _getRouteTemplate(){
     return html`
     <style>
+      .arrow {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+      }
+      
+      .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
+      .left{
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+      }
+      
 
     </style>
-    <div class="content">
+    <div class="calendar-info">
+
+      <div class = "top">
+
+        <div class="year">
+          <p>Testing year class:  <i  class= "arrow left">
+          </i> <i class= "arrow right">
+          </i></p>
+          
+        </div>
+
+        <div class = "month">
+          <p>Testing month class: <i  class= "arrow left">
+          </i> <i class= "arrow right">
+          </i></p>
+        </div>
+
+      </div>
+
+      <div class = "bottom">
+
+      </div> 
       
     </div>
     `
@@ -92,6 +130,9 @@ class Calendar extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({ 'mode': 'open' });
     this._state = 'loading';
+    this.years = [];
+    this.months = [];
+    this.day = [];
   }
 
   connectedCallback() {
@@ -111,4 +152,4 @@ class Calendar extends HTMLElement {
 
 }
 
-window.customElements.define('u-template', UTemplate);
+window.customElements.define('calendar-info', Calendar);
