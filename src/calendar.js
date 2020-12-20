@@ -66,6 +66,26 @@ class Calendar extends HTMLElement {
   _getRouteTemplate(){
     return html`
     <style>
+      .top{
+        height: 400px;
+        max-width: 350px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: green;
+      }
+      .year{
+        text-align: center;
+        background-color: red;
+      }
+      .year:hover{
+        background-color: #CE329F;
+      }
+      .month{
+        background-color: yellow; 
+        text-align: center;
+        
+      }
       .arrow {
         border: solid black;
         border-width: 0 3px 3px 0;
@@ -89,16 +109,16 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-          <p>Testing year class:  <i  class= "arrow left">
+          <h2>${this.years[1]}&nbsp; &nbsp; &nbsp;<i  class= "arrow left">
           </i> <i class= "arrow right">
-          </i></p>
+          </i></h2>
           
         </div>
 
         <div class = "month">
-          <p>Testing month class: <i  class= "arrow left">
+          <h3>${this.months[1]} &nbsp; &nbsp; <i  class= "arrow left">
           </i> <i class= "arrow right">
-          </i></p>
+          </i></h3>
         </div>
 
       </div>
@@ -130,10 +150,23 @@ class Calendar extends HTMLElement {
     super();
     this._shadowRoot = this.attachShadow({ 'mode': 'open' });
     this._state = 'loading';
-    this.years = [];
-    this.months = [];
-    this.day = [];
+
+    //Gets the current full date in the format ( mm , day, time, timezone, year)
+    this.day = new Date();
+    
+    
+
+    //Array insitliastion of key values in a calendar using the current day as the reference point. 
+    this.years = [this.day.getFullYear(), this.day.getFullYear() + 1, this.day.getFullYear() + 2, this.day.getFullYear() + 3];
+    this.months = ['January', 'February', 'March', 'April', 'May', 'June', "July", 'August', 'September', 'October', 'November', 'December'];
+
+    const next_month  = document.querySelector('.month .arrow right');
+    const prev_month = document.querySelector('.month .arrow left')
+  
+
   }
+
+
 
   connectedCallback() {
     //Initial render
