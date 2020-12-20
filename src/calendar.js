@@ -33,6 +33,7 @@ class Calendar extends HTMLElement {
     Loading
   `;
 
+  
   /**
    * @desc this template is shown when our component has content to display. If the view is dependent on route, 
    * get the template from the route
