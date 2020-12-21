@@ -78,33 +78,28 @@ class Calendar extends HTMLElement {
         width: 100%;
         display: flex;
         flex-direction: column;
-        background-color: green;
+        color: var(--Dwhite);
       }
       .year{
         text-align: center;
-        background-color: red;
       }
       .year:hover{
         background-color: #CE329F;
       }
       .month{
-        background-color: yellow; 
         text-align: center;
         
       }
       .month:hover{
-        background-color: #B3DD0F;
+        background-color: #CE329F;
       }
       .arrow {
-        border: solid black;
+        border: solid #D2544A;;
         border-width: 0 3px 3px 0;
         width: 10px;
         height: 10px;
         display: inline-block;
         padding: 3px;
-      }
-      .arrow:hover{
-        background-color: blue;
       }
       .right {
         transform: rotate(-45deg);
@@ -122,16 +117,16 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-          <h2>${this.year}&nbsp; &nbsp; &nbsp;<i  class= "arrow left">
-          </i> <i class= "arrow right">
-          </i></h2>
+          <h2>${this.year}&nbsp; &nbsp;
+          <div  class= "arrow left"></div> &nbsp; <div class= "arrow right"></div>
+          </h2>
           
         </div>
 
         <div class = "month">
-          <h2>${this.months[this.month]} &nbsp; &nbsp; <i  class= "arrow left">
-          </i> <i class= "arrow right">
-          </i></h2>
+          <h2>${this.months[this.month]} &nbsp; &nbsp;
+          <div  class= "arrow left"></div> &nbsp; <div class= "arrow right"></div>
+          </h2>
         </div>
 
       </div>
@@ -172,9 +167,7 @@ class Calendar extends HTMLElement {
     
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
-    this.months = ['January', 'February', 'March', 'April', 'May', 'June', "July", 'August', 'September', 'October', 'November', 'December'];
-
-
+    this.months = ['January   ', 'February  ', 'March     ', 'April     ', 'May       ', 'June      ', "July      ", 'August    ', 'September  ', 'October   ', 'November  ', 'December  '];
 
   }
 
@@ -203,19 +196,39 @@ class Calendar extends HTMLElement {
     
   }
 
+  //Function to go to the next year.
+  GoToNextYear(){
+    this.year++;
+    this._render();
+  }
+
+  //Function to go to the previous year
+  GoToPrevYear(){
+    this.year--;
+    this._render();
+  }
+
   connectedCallback() {
     //Initial render
     this.state = 'content';
 
+    //Shadowrooot doucments 
     let nextmonth = this.shadowRoot.querySelector('.month .arrow.right');
     let prevmonth = this.shadowRoot.querySelector('.month .arrow.left');
+    let nextyear = this.shadowRoot.querySelector('.year .arrow.right');
+    let prevyear = this.shadowRoot.querySelector('.year .arrow.left')
+
+
+    //Event listeners for the arrows; 
     nextmonth.addEventListener('click', () => this.GoToNextMonth());
     prevmonth.addEventListener('click', () => this.GoToPrevMonth());
+    nextyear.addEventListener('click', () => this.GoToNextYear());
+    prevyear.addEventListener('click', () => this.GoToPrevYear());
   }
 
   //Listen for these attributes
   static get observedAttributes() {
-    return ['prop1', 'prop2', 'prop3'];
+    return ['.month', '.year', '.arrow'];
   }
 
   //React to attributes
