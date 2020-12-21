@@ -66,9 +66,15 @@ class Calendar extends HTMLElement {
   _getRouteTemplate(){
     return html`
     <style>
-      .top{
+      .calendar-info{
+        max-width: 350px; 
         height: 400px;
-        max-width: 350px;
+        border-style: solid;
+        
+      }
+      .top{
+        height: 145px;
+        max-width: 100%;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -86,13 +92,20 @@ class Calendar extends HTMLElement {
         text-align: center;
         
       }
+      .month:hover{
+        background-color: #B3DD0F;
+      }
       .arrow {
         border: solid black;
         border-width: 0 3px 3px 0;
+        width: 10px;
+        height: 10px;
         display: inline-block;
         padding: 3px;
       }
-      
+      .arrow:hover{
+        background-color: blue;
+      }
       .right {
         transform: rotate(-45deg);
         -webkit-transform: rotate(-45deg);
@@ -109,16 +122,16 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-          <h2>${this.years[1]}&nbsp; &nbsp; &nbsp;<i  class= "arrow left">
+          <h2>${this.year}&nbsp; &nbsp; &nbsp;<i  class= "arrow left">
           </i> <i class= "arrow right">
           </i></h2>
           
         </div>
 
         <div class = "month">
-          <h3>${this.months[1]} &nbsp; &nbsp; <i  class= "arrow left">
+          <h2>${this.months[this.month]} &nbsp; &nbsp; <i  class= "arrow left">
           </i> <i class= "arrow right">
-          </i></h3>
+          </i></h2>
         </div>
 
       </div>
@@ -153,24 +166,37 @@ class Calendar extends HTMLElement {
 
     //Gets the current full date in the format ( mm , day, time, timezone, year)
     this.day = new Date();
-    
-    
+    this.month = this.day.getMonth();
+    this.year = this.day.getFullYear();
 
+    
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
-    this.years = [this.day.getFullYear(), this.day.getFullYear() + 1, this.day.getFullYear() + 2, this.day.getFullYear() + 3];
+    //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', "July", 'August', 'September', 'October', 'November', 'December'];
 
-    const next_month  = document.querySelector('.month .arrow right');
-    const prev_month = document.querySelector('.month .arrow left')
-  
+
 
   }
 
 
+  GoToNextMonth(){
+    this.month++;
+    if(this.month > 11){
+      this.month = 0;
+      this.year++;
+    }
+    this._render();
+    console.log(this.year);
+    console.log(this.month);
+    
+  }
 
   connectedCallback() {
     //Initial render
     this.state = 'content';
+
+    let nextvar = this.shadowRoot.querySelector('.month .arrow.right');
+    nextvar.addEventListener('click', () => this.GoToNextMonth());
   }
 
   //Listen for these attributes
