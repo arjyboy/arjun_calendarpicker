@@ -179,15 +179,27 @@ class Calendar extends HTMLElement {
   }
 
 
+  //Function to go to the next month 
   GoToNextMonth(){
     this.month++;
     if(this.month > 11){
       this.month = 0;
       this.year++;
     }
+    
     this._render();
-    console.log(this.year);
-    console.log(this.month);
+    
+  }
+
+  //Function to go to the previous month
+  GoToPrevMonth(){
+    this.month--;
+    if(this.month < 0){
+      this.month = 11;
+      this.year--;
+
+    }
+    this._render();
     
   }
 
@@ -195,8 +207,10 @@ class Calendar extends HTMLElement {
     //Initial render
     this.state = 'content';
 
-    let nextvar = this.shadowRoot.querySelector('.month .arrow.right');
-    nextvar.addEventListener('click', () => this.GoToNextMonth());
+    let nextmonth = this.shadowRoot.querySelector('.month .arrow.right');
+    let prevmonth = this.shadowRoot.querySelector('.month .arrow.left');
+    nextmonth.addEventListener('click', () => this.GoToNextMonth());
+    prevmonth.addEventListener('click', () => this.GoToPrevMonth());
   }
 
   //Listen for these attributes
