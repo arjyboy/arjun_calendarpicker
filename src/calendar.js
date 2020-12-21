@@ -67,8 +67,8 @@ class Calendar extends HTMLElement {
     return html`
     <style>
       .calendar-info{
-        max-width: 350px; 
-        height: 400px;
+        max-width: 500px; 
+        height: 450px;
         border-style: solid;
         
       }
@@ -78,9 +78,15 @@ class Calendar extends HTMLElement {
         width: 100%;
         display: flex;
         flex-direction: column;
-        color: var(--Dwhite);
       }
-      .year{
+      .year h2{
+        text-align: center;
+      }
+      .arrow{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
         text-align: center;
       }
       .year:hover{
@@ -93,6 +99,13 @@ class Calendar extends HTMLElement {
       .month:hover{
         background-color: #CE329F;
       }
+      .weekdays_end h3{
+        display: grid;
+        grid-template-columns: repeat(7. 1fr);
+        text-align: center;
+        display: inline-block;
+        padding: 0px 15px 0px 15px;
+      }
       .arrow {
         border: solid #D2544A;;
         border-width: 0 3px 3px 0;
@@ -100,6 +113,11 @@ class Calendar extends HTMLElement {
         height: 10px;
         display: inline-block;
         padding: 3px;
+      }
+      .arrow:hover{
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        cursor: pointer;
       }
       .right {
         transform: rotate(-45deg);
@@ -117,22 +135,38 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-          <h2>${this.year}&nbsp; &nbsp;
-          <div  class= "arrow left"></div> &nbsp; <div class= "arrow right"></div>
-          </h2>
+
+          
+          <i  class= "arrow left"></i> 
+          <h2>${this.year}</h2> 
+          <i class= "arrow right" @click="${(e) => this.GoToPrevMonth()}"></i>
+          
           
         </div>
 
         <div class = "month">
-          <h2>${this.months[this.month]} &nbsp; &nbsp;
-          <div  class= "arrow left"></div> &nbsp; <div class= "arrow right"></div>
-          </h2>
+
+         <i  class= "arrow left"></i> 
+         <h2>${this.months[this.month]}</h2>
+         <i class= "arrow right" @click="${(e) => this.GoToNextMonth()}"></i> 
+        
         </div>
 
-      </div>
+      </div> 
 
       <div class = "bottom">
-
+        <div class = "weekdays_end">
+          <h3>Mon</h3>
+          <h3>Tue</h3>
+          <h3>Wed</h3>
+          <h3>Thur</h3>
+          <h3>Fri</h3>
+          <h3>Sat</h3>
+          <h3>Sun</h3>
+        
+        </div>
+        <div class = "daysofWeek"></div>
+          
       </div> 
       
     </div>
@@ -167,7 +201,7 @@ class Calendar extends HTMLElement {
     
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
-    this.months = ['January   ', 'February  ', 'March     ', 'April     ', 'May       ', 'June      ', "July      ", 'August    ', 'September  ', 'October   ', 'November  ', 'December  '];
+    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   }
 
@@ -213,15 +247,11 @@ class Calendar extends HTMLElement {
     this.state = 'content';
 
     //Shadowrooot doucments 
-    let nextmonth = this.shadowRoot.querySelector('.month .arrow.right');
-    let prevmonth = this.shadowRoot.querySelector('.month .arrow.left');
+
     let nextyear = this.shadowRoot.querySelector('.year .arrow.right');
     let prevyear = this.shadowRoot.querySelector('.year .arrow.left')
 
 
-    //Event listeners for the arrows; 
-    nextmonth.addEventListener('click', () => this.GoToNextMonth());
-    prevmonth.addEventListener('click', () => this.GoToPrevMonth());
     nextyear.addEventListener('click', () => this.GoToNextYear());
     prevyear.addEventListener('click', () => this.GoToPrevYear());
   }
