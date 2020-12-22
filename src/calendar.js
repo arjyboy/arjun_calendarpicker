@@ -65,65 +65,8 @@ class Calendar extends HTMLElement {
    */
   _getRouteTemplate(){
     return html`
-    <style>
-      .calendar-info{
-        max-width: 500px; 
-        height: 450px;
-        border-style: solid;
-      }
-      .top{
-        height: 145px;
-        max-width: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        background-color: yellow;
-      }
-      .year, .month{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 1rem 0 1rem;
-        
-      }
-      
-      .arrow {
-        border: solid #D2544A;;
-        border-width: 0 0.2rem 0.2rem 0;
-        width: 0.6rem;
-        height: 0.6rem;
-        display: flex;
-        padding: 0.2rem;
-      }
-      .arrow:hover{
-        border: solid black;
-        border-width: 0 0.2rem 0.2rem 0;
-        cursor: pointer;
-      }
-      .right {
-        transform: rotate(-45deg);
-        -webkit-transform: rotate(-45deg);
-      }
-      .left{
-        transform: rotate(135deg);
-        -webkit-transform: rotate(135deg);
-      }
+    <style> @import "./src/stylesheet.css";</style>
 
-      .bottom{
-        display: flex;
-        justify-content: center;
-
-      }
-      .days_table{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;s
-
-      }
-      
-      
-
-    </style>
     <div class="calendar-info">
 
       <div class = "top">
@@ -153,9 +96,8 @@ class Calendar extends HTMLElement {
 
       <div class = "bottom">
 
-        
         <table class = "days_table">
-          <tr>
+          <tr class = "days">
             <th>${this.daysinweek[0]}</th>
             <th>${this.daysinweek[1]}</th>
             <th>${this.daysinweek[2]}</th>
@@ -165,7 +107,15 @@ class Calendar extends HTMLElement {
             <th>${this.daysinweek[6]}</th>
           </tr>
 
+          <tr class = "dates">
+            
+            
+         
+          </tr>
+
         </table>
+
+        
         
         
         
@@ -203,6 +153,9 @@ class Calendar extends HTMLElement {
     this.month = this.day.getMonth();
     this.year = this.day.getFullYear();
 
+    
+   
+
     //empty array to load all days in a month
     this.days = []
 
@@ -212,7 +165,31 @@ class Calendar extends HTMLElement {
     //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.daysinweek = ['Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
+    this.getDaysinMonth();
+  }
+
+  getDaysinMonth(){
+    //set the current date to the first date of that month. 
+    let firstdate = this.day.setDate(1);
+
+    // Grab the first day of that same date
+    let firstday = this.day.getDay();
+    
+    if(this.year % 4 != 0){
+      this.numD
+      ays[1] = 29;
+    }
+
+
+
+
+    
+
+
+
+    
   }
 
 
@@ -268,7 +245,11 @@ class Calendar extends HTMLElement {
     console.log(`${name}'s value has been changed from ${oldValue} to ${newValue}`);
   }
 
+  
+
 }
+
+
 
 window.customElements.define('calendar-info', Calendar);
 
