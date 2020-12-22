@@ -108,9 +108,12 @@ class Calendar extends HTMLElement {
           </tr>
 
           <tr class = "dates">
-            
-            
-         
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
           </tr>
 
         </table>
@@ -153,59 +156,78 @@ class Calendar extends HTMLElement {
     this.month = this.day.getMonth();
     this.year = this.day.getFullYear();
 
-    
-   
+    //Selected date
 
-    //empty array to load all days in a month
-    this.days = []
+    let selectedday = this.day;
+    let selectedmonth = this.month;
+    let selectedyear = this.year;
 
 
-    
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.daysinweek = ['Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
-    this.getDaysinMonth();
+
+  
+    
   }
 
+  /**
+   * Function that populates the dates 
+   */
   getDaysinMonth(){
     //set the current date to the first date of that month. 
     let firstdate = this.day.setDate(1);
 
     // Grab the first day of that same date
     let firstday = this.day.getDay();
+    let month = this.day.getMonth();
     
+    //Checks to see if leap year 
     if(this.year % 4 != 0){
-      this.numD
-      ays[1] = 29;
+      this.numDays[1] = 29;
     }
 
+    /**Iterate through the for loop according to the number of 
+     * 
+     */
+
+     const tr = this.shadowRoot().getAttribute();
+    for(let i = 0; i <= this.numDays[month]; i++){
+      
 
 
+    }
 
+   
     
 
 
 
+
+  
     
   }
 
 
-  //Function to go to the next month 
+  /**
+   * Function that goes to the next month 
+   */
   GoToNextMonth(){
     this.month++;
     if(this.month > 11){
       this.month = 0;
       this.year++;
     }
-    
     this._render();
     
   }
 
-  //Function to go to the previous month
+  /**
+   * Function that goes to the previous month 
+   */
   GoToPrevMonth(){
     this.month--;
     if(this.month < 0){
@@ -217,17 +239,22 @@ class Calendar extends HTMLElement {
     
   }
 
-  //Function to go to the next year.
+  /**
+   * Function that goes to the next year
+   */
   GoToNextYear(){
     this.year++;
     this._render();
   }
 
-  //Function to go to the previous year
+  /**
+   * Function that goes to the previous year
+   */
   GoToPrevYear(){
     this.year--;
     this._render();
   }
+
 
   connectedCallback() {
     //Initial render
@@ -245,22 +272,8 @@ class Calendar extends HTMLElement {
     console.log(`${name}'s value has been changed from ${oldValue} to ${newValue}`);
   }
 
-  
-
 }
 
 
 
 window.customElements.define('calendar-info', Calendar);
-
-
-/**
- * .weekdays_end h3{
-        display: grid;
-        grid-template-columns: repeat(7. 1fr);
-        text-align: center;
-        display: inline-block;
-        padding: 0px 15px 0px 15px;
-      }
-      
- */
