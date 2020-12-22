@@ -70,7 +70,6 @@ class Calendar extends HTMLElement {
         max-width: 500px; 
         height: 450px;
         border-style: solid;
-        
       }
       .top{
         height: 145px;
@@ -78,45 +77,27 @@ class Calendar extends HTMLElement {
         width: 100%;
         display: flex;
         flex-direction: column;
+        background-color: yellow;
       }
-      .year h2{
-        text-align: center;
-      }
-      .arrow{
+      .year, .month{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 2rem;
-        text-align: center;
-      }
-      .year:hover{
-        background-color: #CE329F;
-      }
-      .month{
-        text-align: center;
+        padding: 0 1rem 0 1rem;
         
       }
-      .month:hover{
-        background-color: #CE329F;
-      }
-      .weekdays_end h3{
-        display: grid;
-        grid-template-columns: repeat(7. 1fr);
-        text-align: center;
-        display: inline-block;
-        padding: 0px 15px 0px 15px;
-      }
+      
       .arrow {
         border: solid #D2544A;;
-        border-width: 0 3px 3px 0;
-        width: 10px;
-        height: 10px;
-        display: inline-block;
-        padding: 3px;
+        border-width: 0 0.2rem 0.2rem 0;
+        width: 0.6rem;
+        height: 0.6rem;
+        display: flex;
+        padding: 0.2rem;
       }
       .arrow:hover{
-        border: solid white;
-        border-width: 0 3px 3px 0;
+        border: solid black;
+        border-width: 0 0.2rem 0.2rem 0;
         cursor: pointer;
       }
       .right {
@@ -127,6 +108,19 @@ class Calendar extends HTMLElement {
         transform: rotate(135deg);
         -webkit-transform: rotate(135deg);
       }
+
+      .bottom{
+        display: flex;
+        justify-content: center;
+
+      }
+      .days_table{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;s
+
+      }
+      
       
 
     </style>
@@ -137,35 +131,46 @@ class Calendar extends HTMLElement {
         <div class="year">
 
           
-          <i  class= "arrow left"></i> 
+          <i  class= "arrow left" @click="${(b) => this.GoToPrevYear()}"></i> 
           <h2>${this.year}</h2> 
-          <i class= "arrow right" @click="${(e) => this.GoToPrevMonth()}"></i>
+          <i class= "arrow right" @click="${(c) => this.GoToNextYear()}" ></i>
           
           
         </div>
 
+
         <div class = "month">
 
-         <i  class= "arrow left"></i> 
+         <i  class= "arrow left" @click="${(a) => this.GoToPrevMonth()}"></i> 
          <h2>${this.months[this.month]}</h2>
          <i class= "arrow right" @click="${(e) => this.GoToNextMonth()}"></i> 
         
         </div>
 
+        
+
       </div> 
 
       <div class = "bottom">
-        <div class = "weekdays_end">
-          <h3>Mon</h3>
-          <h3>Tue</h3>
-          <h3>Wed</h3>
-          <h3>Thur</h3>
-          <h3>Fri</h3>
-          <h3>Sat</h3>
-          <h3>Sun</h3>
+
         
-        </div>
-        <div class = "daysofWeek"></div>
+        <table class = "days_table">
+          <tr>
+            <th>${this.daysinweek[0]}</th>
+            <th>${this.daysinweek[1]}</th>
+            <th>${this.daysinweek[2]}</th>
+            <th>${this.daysinweek[3]}</th>
+            <th>${this.daysinweek[4]}</th>
+            <th>${this.daysinweek[5]}</th>
+            <th>${this.daysinweek[6]}</th>
+          </tr>
+
+        </table>
+        
+        
+        
+
+        <div class = "daysinMonth"></div>
           
       </div> 
       
@@ -198,10 +203,15 @@ class Calendar extends HTMLElement {
     this.month = this.day.getMonth();
     this.year = this.day.getFullYear();
 
+    //empty array to load all days in a month
+    this.days = []
+
+
     
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.daysinweek = ['Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   }
 
@@ -246,14 +256,6 @@ class Calendar extends HTMLElement {
     //Initial render
     this.state = 'content';
 
-    //Shadowrooot doucments 
-
-    let nextyear = this.shadowRoot.querySelector('.year .arrow.right');
-    let prevyear = this.shadowRoot.querySelector('.year .arrow.left')
-
-
-    nextyear.addEventListener('click', () => this.GoToNextYear());
-    prevyear.addEventListener('click', () => this.GoToPrevYear());
   }
 
   //Listen for these attributes
@@ -269,3 +271,15 @@ class Calendar extends HTMLElement {
 }
 
 window.customElements.define('calendar-info', Calendar);
+
+
+/**
+ * .weekdays_end h3{
+        display: grid;
+        grid-template-columns: repeat(7. 1fr);
+        text-align: center;
+        display: inline-block;
+        padding: 0px 15px 0px 15px;
+      }
+      
+ */
