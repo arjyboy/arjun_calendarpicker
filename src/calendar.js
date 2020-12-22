@@ -107,13 +107,22 @@ class Calendar extends HTMLElement {
             <th>${this.daysinweek[6]}</th>
           </tr>
 
-          <tr class = "dates">
+          <tr class = "dates 1">
             <th>1</th>
             <th>2</th>
             <th>3</th>
             <th>4</th>
             <th>5</th>
             <th>6</th>
+          </tr>
+
+          <tr class = "dates 2">
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>11</th>
+            <th>12</th>
           </tr>
 
         </table>
@@ -169,6 +178,8 @@ class Calendar extends HTMLElement {
     this.daysinweek = ['Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
+    this.getDaysinMonth();
+
 
   
     
@@ -177,7 +188,7 @@ class Calendar extends HTMLElement {
   /**
    * Function that populates the dates 
    */
-  getDaysinMonth(){
+  getDaysinMonth(name){
     //set the current date to the first date of that month. 
     let firstdate = this.day.setDate(1);
 
@@ -190,16 +201,11 @@ class Calendar extends HTMLElement {
       this.numDays[1] = 29;
     }
 
-    /**Iterate through the for loop according to the number of 
-     * 
-     */
-
-     const tr = this.shadowRoot().getAttribute();
-    for(let i = 0; i <= this.numDays[month]; i++){
-      
 
 
-    }
+    
+
+    
 
    
     
