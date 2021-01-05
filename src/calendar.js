@@ -105,26 +105,11 @@ class Calendar extends HTMLElement {
             <th>${this.daysinweek[6]}</th>
           </tr>
         
-          <tr class = "dates first">
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-            <th>6</th>
+          <tr class = "dates">
+
           </tr>
 
-          <tr class = "dates sec">
-            
-          </tr>
-
-          <tr class = "dates third">
-         
-          </tr>
-
-          <tr class = "dates final">
-            
-          </tr>
+          
 
         </table>
 
@@ -178,13 +163,20 @@ class Calendar extends HTMLElement {
     
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
-    //Checks to see if leap year 
+    //Checks to see if leap year and updates the date array accordingly
     if(this.year % 4 != 0){
       this.numDays[1] = 29;
     }
 
-  
+
     
+  }
+
+  /**
+   * Function to format the date accordingly
+   */
+  formatDate(day){
+
   }
 
   /**
@@ -200,7 +192,16 @@ class Calendar extends HTMLElement {
     //stores the month variable
     let month = this.day.getMonth();
 
-  
+    dates.innerHTML = '';
+
+    for(let i = 0; i < this.numDays[month]; i++){
+      const dates_table = this.shadowRoot.querySelector('.dates');
+      dates_table.add
+      dates_table.textContent = i + 1;
+      
+    }
+
+    
     
   }
 
@@ -214,6 +215,7 @@ class Calendar extends HTMLElement {
       this.month = 0;
       this.year++;
     }
+    this.getDaysinMonth();
     this._render();
     
   }
@@ -232,21 +234,6 @@ class Calendar extends HTMLElement {
     
   }
 
-  /**
-   * Function that goes to the next year
-   */
-  GoToNextYear(){
-    this.year++;
-    this._render();
-  }
-
-  /**
-   * Function that goes to the previous year
-   */
-  GoToPrevYear(){
-    this.year--;
-    this._render();
-  }
 
 
   connectedCallback() {
