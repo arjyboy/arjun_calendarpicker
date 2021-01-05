@@ -1,5 +1,4 @@
 
-  
   :root{
     --backcolor: #5cdb95;
     --txtcolor: #edf5e1;
@@ -22,7 +21,14 @@
       flex-direction: column;
       background-color:var(--backcolor);
     }
-    .year, .month{
+    .year{
+      display: flex;
+      justify-content: space-evenly;
+    }
+    .year h2:hover{
+      background-color: black;
+    }
+    .month{
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -71,7 +77,8 @@
   
     }
     .dates th:hover{
-      color: red;
+      background-color: yellow;
+      border-style: round; 
       
     }
     .days, .dates, .first{

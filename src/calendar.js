@@ -73,7 +73,7 @@ class Calendar extends HTMLElement {
 
         <div class="year">
 
-          
+
           <h2> ${this.date} / ${this.month + 1} / ${this.year} </h2> 
           
           
@@ -89,12 +89,12 @@ class Calendar extends HTMLElement {
         </div>
 
         
-
       </div> 
 
       <div class = "bottom">
 
         <table class = "days_table">
+
           <tr class = "days">
             <th>${this.daysinweek[0]}</th>
             <th>${this.daysinweek[1]}</th>
@@ -104,7 +104,7 @@ class Calendar extends HTMLElement {
             <th>${this.daysinweek[5]}</th>
             <th>${this.daysinweek[6]}</th>
           </tr>
-
+        
           <tr class = "dates first">
             <th>1</th>
             <th>2</th>
@@ -115,12 +115,15 @@ class Calendar extends HTMLElement {
           </tr>
 
           <tr class = "dates sec">
-            <th>7</th>
-            <th>8</th>
-            <th>9</th>
-            <th>10</th>
-            <th>11</th>
-            <th>12</th>
+            
+          </tr>
+
+          <tr class = "dates third">
+         
+          </tr>
+
+          <tr class = "dates final">
+            
           </tr>
 
         </table>
@@ -165,11 +168,6 @@ class Calendar extends HTMLElement {
     this.month = this.day.getMonth();
     this.year = this.day.getFullYear();
 
-    //Selected date
-
-    let selectedday = this.day;
-    let selectedmonth = this.month;
-    let selectedyear = this.year;
 
 
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
@@ -184,8 +182,6 @@ class Calendar extends HTMLElement {
     if(this.year % 4 != 0){
       this.numDays[1] = 29;
     }
-
-    this.getDaysinMonth();
 
   
     
@@ -204,8 +200,7 @@ class Calendar extends HTMLElement {
     //stores the month variable
     let month = this.day.getMonth();
 
-    
-
+  
     
   }
 
