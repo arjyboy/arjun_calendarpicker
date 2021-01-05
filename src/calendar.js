@@ -74,9 +74,7 @@ class Calendar extends HTMLElement {
         <div class="year">
 
           
-          <i  class= "arrow left" @click="${(b) => this.GoToPrevYear()}"></i> 
-          <h2>${this.year}</h2> 
-          <i class= "arrow right" @click="${(c) => this.GoToNextYear()}" ></i>
+          <h2> ${this.date} / ${this.month + 1} / ${this.year} </h2> 
           
           
         </div>
@@ -107,7 +105,7 @@ class Calendar extends HTMLElement {
             <th>${this.daysinweek[6]}</th>
           </tr>
 
-          <tr class = "dates 1">
+          <tr class = "dates first">
             <th>1</th>
             <th>2</th>
             <th>3</th>
@@ -116,7 +114,7 @@ class Calendar extends HTMLElement {
             <th>6</th>
           </tr>
 
-          <tr class = "dates 2">
+          <tr class = "dates sec">
             <th>7</th>
             <th>8</th>
             <th>9</th>
@@ -162,6 +160,8 @@ class Calendar extends HTMLElement {
 
     //Gets the current full date in the format ( mm , day, time, timezone, year)
     this.day = new Date();
+
+    this.date = this.day.getDate();
     this.month = this.day.getMonth();
     this.year = this.day.getFullYear();
 
@@ -176,10 +176,16 @@ class Calendar extends HTMLElement {
     //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.daysinweek = ['Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
-    this.getDaysinMonth();
+    //Checks to see if leap year 
+    if(this.year % 4 != 0){
+      this.numDays[1] = 29;
+    }
 
+    this.getDaysinMonth();
 
   
     
@@ -188,32 +194,18 @@ class Calendar extends HTMLElement {
   /**
    * Function that populates the dates 
    */
-  getDaysinMonth(name){
+  getDaysinMonth(){
     //set the current date to the first date of that month. 
     let firstdate = this.day.setDate(1);
 
-    // Grab the first day of that same date
+    //stores the first day as a variable. 
     let firstday = this.day.getDay();
+
+    //stores the month variable
     let month = this.day.getMonth();
-    
-    //Checks to see if leap year 
-    if(this.year % 4 != 0){
-      this.numDays[1] = 29;
-    }
-
-
 
     
 
-    
-
-   
-    
-
-
-
-
-  
     
   }
 
