@@ -117,13 +117,13 @@ class Calendar extends HTMLElement {
           </tr>
 
           <tr class = "dates B">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
           </tr>
 
           
@@ -208,11 +208,11 @@ class Calendar extends HTMLElement {
 
 
     for(let i = 0; i < this.numDays[this.month]; i++){
-      const dates_table = this._shadowRoot.querySelector('.days_table .dates td');
+      const dates_table1 = this._shadowRoot.querySelector('.days_table .dates td');
       //dates_table.classList.add('day');
-      dates_table.textContent = i + 1;
+      dates_table1.textContent = i + 1;
 
-      dates.appendChild(dates_table);
+      dates.appendChild(dates_table1);
       console.log(dates);
     }
 

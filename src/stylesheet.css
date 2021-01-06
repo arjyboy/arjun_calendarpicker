@@ -58,7 +58,7 @@
     }
 
 /**
-  * BOTTOM half of the calendar picker. 
+  * BOTTOM Half of the Calendar Picker. 
   */
     .bottom{
       max-width: 100%;
@@ -67,7 +67,7 @@
       background-color: var(--arrow);
       display: flex;
       flex-wrap: wrap;  
-      align-items: flex-start;  
+    
     }
     .days, .dates{
       display: flex;
