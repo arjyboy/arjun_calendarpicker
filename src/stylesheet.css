@@ -45,7 +45,7 @@
     }
     .arrow:hover{
       border: solid black;
-      border-width: 0 0.2rem 0.2rem 0;
+      border-width: 0 0.4rem 0.4rem 0;
       cursor: pointer;
     }
     .right {
@@ -56,21 +56,18 @@
       transform: rotate(135deg);
       -webkit-transform: rotate(135deg);
     }
-  
+
+/**
+  * BOTTOM half of the calendar picker. 
+  */
     .bottom{
-      height: 300px;
+      max-width: 100%;
+      width: 100%;
+      height: 20em;
       background-color: var(--arrow);
       display: flex;
-      justify-content: center;
-      
-  
-    }
-    .days{
-      list-style-type: none;
-    }
-    .days_table{
-      width: 100%;
-      height: 10%;
+      flex-wrap: wrap;  
+      align-items: flex-start;  
     }
     .days, .dates{
       display: flex;
@@ -78,15 +75,15 @@
       text-align: center;
   
     }
-    .dates th:hover{
-      background-color: yellow;
-      border-style: round; 
-      
+    .days:hover{
+      background-color: black;
     }
-    .days, .dates, .first{
+    .days_table{
+      width: 100%;
+      height: 10%;
+    }
+
+    .dates{
       height: 3em;
       width: 100%;
-      
-
-
     }

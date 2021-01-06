@@ -92,29 +92,28 @@ class Calendar extends HTMLElement {
       </div> 
 
       <div class = "bottom">
-
-        <ul class = "days">
-          <li>${this.daysinweek[0]}</li>
-          <li>${this.daysinweek[1]}</li>
-          <li>${this.daysinweek[2]}</li>
-          <li>${this.daysinweek[3]}</li>
-          <li>${this.daysinweek[4]}</li>
-          <li>${this.daysinweek[5]}</li>
-          <li>${this.daysinweek[6]}</li>
-
-        </ul>
+      
 
         <table class = "days_table">
 
-    
+          <tr class = "days">
+            <th>${this.daysinweek[0]}</th>
+            <th>${this.daysinweek[1]}</th>
+            <th>${this.daysinweek[2]}</th>
+            <th>${this.daysinweek[3]}</th>
+            <th>${this.daysinweek[4]}</th>
+            <th>${this.daysinweek[5]}</th>
+            <th>${this.daysinweek[6]}</th>
+          </tr>
+        
           <tr class = "dates A">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
           </tr>
 
           <tr class = "dates B">
