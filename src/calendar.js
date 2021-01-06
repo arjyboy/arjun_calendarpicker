@@ -106,7 +106,13 @@ class Calendar extends HTMLElement {
           </tr>
         
           <tr class = "dates">
-
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>s
+            <th></th>
           </tr>
 
           
@@ -152,53 +158,57 @@ class Calendar extends HTMLElement {
     this.date = this.day.getDate();
     this.month = this.day.getMonth();
     this.year = this.day.getFullYear();
+  
+
+    //Selected day
+
+    this.selectedday = this.date;
+    this.selectedmonth = this.month;
+
 
 
 
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
-    //this.years = [this.year, this.year+1, this.year + 2, this.year + 3];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.daysinweek = ['Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-    
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
-    //Checks to see if leap year and updates the date array accordingly
-    if(this.year % 4 != 0){
-      this.numDays[1] = 29;
-    }
-
+  
 
     
   }
 
-  /**
-   * Function to format the date accordingly
-   */
-  formatDate(day){
-
-  }
 
   /**
    * Function that populates the dates 
    */
   getDaysinMonth(){
+    
     //set the current date to the first date of that month. 
-    let firstdate = this.day.setDate(1);
+    // let firstdate = this.day.setDate(1);
 
-    //stores the first day as a variable. 
-    let firstday = this.day.getDay();
+    // //stores the first day as a variable. 
+    // let firstday = this.day.getDay();
 
-    //stores the month variable
-    let month = this.day.getMonth();
+    const dates = this._shadowRoot.querySelector('.days_table .dates');
 
-    dates.innerHTML = '';
+    //Checks to see if leap year and updates the date array accordingly
+    if(this.year % 4 == 0){
+      this.numDays[1] = 29;
+    }
+    else{
+      this.numDays[1] = 28;
+    }
 
-    for(let i = 0; i < this.numDays[month]; i++){
-      const dates_table = this.shadowRoot.querySelector('.dates');
-      dates_table.add
-      dates_table.textContent = i + 1;
+
+
+    for(let i = 0; i < this.numDays[this.month]; i++){
       
+      const dates_table = this._shadowRoot.querySelector('.days_table .dates th');
+      dates_table.textContent = i + 1;
+
+      dates.appendChild(dates_table);
+      console.log(dates);
     }
 
     
@@ -230,6 +240,7 @@ class Calendar extends HTMLElement {
       this.year--;
 
     }
+    this.getDaysinMonth();
     this._render();
     
   }
