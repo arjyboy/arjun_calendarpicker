@@ -97,33 +97,63 @@ class Calendar extends HTMLElement {
         <table class = "days_table">
 
           <tr class = "days">
-            <th>${this.daysinweek[0]}</th>
             <th>${this.daysinweek[1]}</th>
             <th>${this.daysinweek[2]}</th>
             <th>${this.daysinweek[3]}</th>
             <th>${this.daysinweek[4]}</th>
             <th>${this.daysinweek[5]}</th>
             <th>${this.daysinweek[6]}</th>
+            <th>${this.daysinweek[0]}</th>
           </tr>
         
           <tr class = "dates A">
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
+            <td>01</td>
+            <td> 02</td>
+            <td> 03</td>
+            <td> 04</td>
+            <td> 05</td>
+            <td> 06</td>
+            <td> 07</td>
           </tr>
 
           <tr class = "dates B">
-            <td>8</td>
-            <td>9</td>
+            <td>08</td>
+            <td>09</td>
             <td>10</td>
             <td>11</td>
             <td>12</td>
             <td>13</td>
             <td>14</td>
+          </tr>
+
+          <tr class = "dates C">
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+            <td>21</td>
+          </tr>
+
+          <tr class = "dates D">
+            <td>22</td>
+            <td>23</td>
+            <td>24</td>
+            <td>25</td>
+            <td>26</td>
+            <td>27</td>
+            <td>28</td>
+          </tr>
+
+          <tr class = "dates E">
+            <td>29</td>
+            <td>30</td>
+            <td>31</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
           </tr>
 
           
@@ -174,7 +204,6 @@ class Calendar extends HTMLElement {
     this.year = this.day.getFullYear();
 
   
-
     //Selected day
 
     this.selectedday = this.date;
@@ -182,7 +211,7 @@ class Calendar extends HTMLElement {
 
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    this.daysinweek = ['Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    this.daysinweek = [ 'Sun','Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat'];
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
 
@@ -193,9 +222,8 @@ class Calendar extends HTMLElement {
    * Function that populates the dates table, 
    */
   getDaysinMonth(){
-    
 
-    const dates = this._shadowRoot.querySelector('.days_table .dates ');
+    const dates = this._shadowRoot.querySelectorAll('.days_table .dates td ');
 
     //Checks to see if leap year and updates the date array accordingly
     if(this.year % 4 == 0){
@@ -212,9 +240,13 @@ class Calendar extends HTMLElement {
       //dates_table.classList.add('day');
       dates_table1.textContent = i + 1;
 
-      dates.appendChild(dates_table1);
-      console.log(dates);
+      dates.appendChild(dates_table1[i]);
+      
     }
+
+    console.log(dates);
+    
+
 
     
     
