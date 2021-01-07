@@ -87,11 +87,9 @@
     .dates{
       display: flex;
       justify-content: space-between;
-      height: 3em;
       width: 100%;
     }
     td{
       padding: 1em 0 1em 0;
-
     }
     

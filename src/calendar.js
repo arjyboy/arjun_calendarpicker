@@ -96,79 +96,15 @@ class Calendar extends HTMLElement {
 
         <table class = "days_table">
 
-          <tr class = "days">
-            <th>${this.daysinweek[1]}</th>
-            <th>${this.daysinweek[2]}</th>
-            <th>${this.daysinweek[3]}</th>
-            <th>${this.daysinweek[4]}</th>
-            <th>${this.daysinweek[5]}</th>
-            <th>${this.daysinweek[6]}</th>
-            <th>${this.daysinweek[0]}</th>
-          </tr>
-        
-          <tr class = "dates A">
-            <td>01</td>
-            <td> 02</td>
-            <td> 03</td>
-            <td> 04</td>
-            <td> 05</td>
-            <td> 06</td>
-            <td> 07</td>
-          </tr>
-
-          <tr class = "dates B">
-            <td>08</td>
-            <td>09</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-          </tr>
-
-          <tr class = "dates C">
-            <td>15</td>
-            <td>16</td>
-            <td>17</td>
-            <td>18</td>
-            <td>19</td>
-            <td>20</td>
-            <td>21</td>
-          </tr>
-
-          <tr class = "dates D">
-            <td>22</td>
-            <td>23</td>
-            <td>24</td>
-            <td>25</td>
-            <td>26</td>
-            <td>27</td>
-            <td>28</td>
-          </tr>
-
-          <tr class = "dates E">
-            <td>29</td>
-            <td>30</td>
-            <td>31</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-            <td>--</td>
-          </tr>
+          ${this._renderCalendar()}
 
           
-          
 
-          
+
 
         </table>
 
         
-        
-        
-        
-
-        <div class = "daysinMonth"></div>
           
       </div> 
       
@@ -205,7 +141,6 @@ class Calendar extends HTMLElement {
 
   
     //Selected day
-
     this.selectedday = this.date;
     this.selectedmonth = this.month;
 
@@ -217,14 +152,75 @@ class Calendar extends HTMLElement {
 
   }
 
+  _renderCalendar(){
+    return html`
+    <tr class = "days">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class = "dates A">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr class = "dates B">
+      <td>08</td>
+      <td>09</td>
+      <td>10</td>
+      <td>11</td>
+      <td>12</td>
+      <td>13</td>
+      <td>14</td>
+    </tr>
+
+    <tr class = "dates C">
+      <td>15</td>
+      <td>16</td>
+      <td>17</td>
+      <td>18</td>
+      <td>19</td>
+      <td>20</td>
+      <td>21</td>
+    </tr>
+
+    <tr class = "dates D">
+      <td>22</td>
+      <td>23</td>
+      <td>24</td>
+      <td>25</td>
+      <td>26</td>
+      <td>27</td>
+      <td>28</td>
+    </tr>
+
+    <tr class = "dates E">
+      <td>29</td>
+      <td>30</td>
+      <td>31</td>
+      <td>--</td>
+      <td>--</td>
+      <td>--</td>
+      <td>--</td>
+    </tr>
+
+    `
+  }
 
   /**
    * Function that populates the dates table, 
    */
   getDaysinMonth(){
-
-    const dates = this._shadowRoot.querySelectorAll('.days_table .dates td ');
-
     //Checks to see if leap year and updates the date array accordingly
     if(this.year % 4 == 0){
       this.numDays[1] = 29;
@@ -233,22 +229,52 @@ class Calendar extends HTMLElement {
       this.numDays[1] = 28;
     }
 
+    let days = this.shadowRoot.querySelector('.days_table .days');
+    let dates = this.shadowRoot.querySelector('.days_table .dates');
+    console.log(dates);
 
+    //console.log(days);
+    //console.log(dates);
 
-    for(let i = 0; i < this.numDays[this.month]; i++){
-      const dates_table1 = this._shadowRoot.querySelector('.days_table .dates td');
-      //dates_table.classList.add('day');
-      dates_table1.textContent = i + 1;
-
-      dates.appendChild(dates_table1[i]);
-      
+    //for loop to fill the top line with days of the week
+    for(let a = 0; a<this.daysinweek.length; a++){
+      let day = this.shadowRoot.querySelector('.days_table .days td')
+      day.innerHTML = '';
+      day.textContent = this.daysinweek[a];
+      days.appendChild(day);
     }
 
-    console.log(dates);
-    
+    let num = 0;
+    for(let i = 0; i<7; i++){
+      let date = this.shadowRoot.querySelector('.days_table .dates.A td')
+      date.innerHTML = '';
+      num = num + 1;
+      date.textContent = '0' + num.toString();
+      dates.appendChild(date);
+    }
 
 
-    
+    // let num = 0;
+    // for(let i = 0; i < 5; i++){
+    //   const date = this.shadowRoot.querySelector('.days_table .dates td');
+    //   date.innerHTML = '';
+      
+    //   //console.log(date);
+    //   for(let j = 0; j < 7; j++){
+    //     date.innerHTML = '';
+    //     num = num + 1;
+    //     if(num > this.numDays[this.month]){
+    //       break;
+    //     }
+    //     date.textContent = num.toString();
+    //     dates[i].appendChild(date);
+        
+    //   }
+      
+      
+      
+    // }    
+  
     
   }
 
@@ -302,6 +328,7 @@ class Calendar extends HTMLElement {
 
 }
 
-
-
 window.customElements.define('calendar-info', Calendar);
+
+/**
+ */
