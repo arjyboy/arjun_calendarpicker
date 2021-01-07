@@ -195,23 +195,23 @@ class Calendar extends HTMLElement {
     </tr>
 
     <tr class = "dates D">
-      <td>22</td>
-      <td>23</td>
-      <td>24</td>
-      <td>25</td>
-      <td>26</td>
-      <td>27</td>
-      <td>28</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
 
     <tr class = "dates E">
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
 
     `
@@ -251,7 +251,7 @@ class Calendar extends HTMLElement {
         let date = this.shadowRoot.querySelector(`.days_table .dates.${code[j]} td`)
         date.innerHTML = '';
         num = num + 1;
-        
+
         if(num > this.numDays[this.month]){
           break;
         }
