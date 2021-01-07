@@ -195,13 +195,13 @@ class Calendar extends HTMLElement {
     </tr>
 
     <tr class = "dates D">
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>22</td>
+      <td>23</td>
+      <td>24</td>
+      <td>25</td>
+      <td>26</td>
+      <td>27</td>
+      <td>28</td>
     </tr>
 
     <tr class = "dates E">
@@ -229,13 +229,11 @@ class Calendar extends HTMLElement {
       this.numDays[1] = 28;
     }
 
+    //variables to select the appropriate rows for each dataset 
     let days = this.shadowRoot.querySelector('.days_table .days');
     let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
     let code = ['A','B','C','D','E'];
-    console.log(dates);
-
-    //console.log(days);
-    //console.log(dates);
+ 
 
     //for loop to fill the top line with days of the week
     for(let a = 0; a<this.daysinweek.length; a++){
@@ -245,6 +243,7 @@ class Calendar extends HTMLElement {
       days.appendChild(day);
     }
 
+    //for loop that fills the numbers according to the amonut of days in a particular month 
     let num = 0;
     for(let j =0; j<5; j++){
       for(let i = 0; i<7; i++){
@@ -252,41 +251,27 @@ class Calendar extends HTMLElement {
         date.innerHTML = '';
         num = num + 1;
 
+        //Checks to see if the count has reached the max amount of days and then resets the count. 
         if(num > this.numDays[this.month]){
-          break;
+          num = 1; 
         }
 
+        //arranging the format of the first 9 numbers
         if(num < 10){
           date.textContent =  '0' + num.toString();
         }
         else{
           date.textContent = num.toString();
         }
+        //adds the number value to the list.
         dates[j].appendChild(date);
+
       }
+
     }
 
 
-    // let num = 0;
-    // for(let i = 0; i < 5; i++){
-    //   const date = this.shadowRoot.querySelector('.days_table .dates td');
-    //   date.innerHTML = '';
-      
-    //   //console.log(date);
-    //   for(let j = 0; j < 7; j++){
-    //     date.innerHTML = '';
-    //     num = num + 1;
-    //     if(num > this.numDays[this.month]){
-    //       break;
-    //     }
-    //     date.textContent = num.toString();
-    //     dates[i].appendChild(date);
-        
-    //   }
-      
-      
-      
-    // }    
+    
   
     
   }
