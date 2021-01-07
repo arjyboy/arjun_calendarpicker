@@ -29,7 +29,8 @@
       justify-content: space-evenly;
     }
     .year h2:hover{
-      background-color: black;
+      background-color: var(--arrow);
+      padding: 0 0.2em 0 0.2em;
     }
     .month{
       display: flex;
@@ -93,8 +94,11 @@
       padding: 1em 1em 1em 1em;
     }
 
-    .dates td:hover{
+    .dates td:hover, .today{
       background-color: var(--highlight);
       border-radius: 2em;
+   
     }
+
+
     

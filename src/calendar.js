@@ -34,9 +34,9 @@ class Calendar extends HTMLElement {
     Loading
   `;
 
-  
   /**
-   * @desc this template is shown when our component has content to display. If the view is dependent on route, 
+   * @desc this template is shown when our component has content to display. 
+   * If the view is dependent on route, 
    * get the template from the route
    */
   _templateContent = () => html`
@@ -74,7 +74,7 @@ class Calendar extends HTMLElement {
         <div class="year">
 
 
-          <h2> ${this.date} / ${this.month + 1} / ${this.year} </h2> 
+          <h2 class> ${this.selecteddate} / ${this.selectedmonth + 1} / ${this.selectedyear} </h2> 
           
           
         </div>
@@ -97,6 +97,7 @@ class Calendar extends HTMLElement {
         <table class = "days_table">
 
           ${this._renderCalendar()}
+          
 
           
 
@@ -133,16 +134,20 @@ class Calendar extends HTMLElement {
     this._state = 'loading';
 
     //Gets the current full date in the format ( mm , day, time, timezone, year)
-    this.day = new Date();
+    this.fulldate = new Date();
 
-    this.date = this.day.getDate();
-    this.month = this.day.getMonth();
-    this.year = this.day.getFullYear();
+    //Store the day, month and year of the current date in variables 
+    this.day = this.fulldate.getDay();
+    this.date = this.fulldate.getDate();
+    this.month = this.fulldate.getMonth();
+    this.year = this.fulldate.getFullYear();
 
-  
-    //Selected day
-    this.selectedday = this.date;
+    //Selected days used for highlighting the colour 
+    this.selectedday = this.day;
+    this.selecteddate = this.date; 
     this.selectedmonth = this.month;
+    this.selectedyear = this.year; 
+
 
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -152,6 +157,9 @@ class Calendar extends HTMLElement {
 
   }
 
+  /**
+   * The calendar date function that fills all the places in 
+   */
   _renderCalendar(){
     return html`
     <tr class = "days">
@@ -218,9 +226,14 @@ class Calendar extends HTMLElement {
   }
 
   /**
-   * Function that populates the dates table, 
+   * Function that populates the months
    */
   getDaysinMonth(){
+    //variables to select the appropriate rows for each dataset 
+    let days = this.shadowRoot.querySelector('.days_table .days');
+    let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
+    let code = ['A','B','C','D','E'];
+  
     //Checks to see if leap year and updates the date array accordingly
     if(this.year % 4 == 0){
       this.numDays[1] = 29;
@@ -229,11 +242,8 @@ class Calendar extends HTMLElement {
       this.numDays[1] = 28;
     }
 
-    //variables to select the appropriate rows for each dataset 
-    let days = this.shadowRoot.querySelector('.days_table .days');
-    let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
-    let code = ['A','B','C','D','E'];
- 
+
+   
 
     //for loop to fill the top line with days of the week
     for(let a = 0; a<this.daysinweek.length; a++){
@@ -251,11 +261,23 @@ class Calendar extends HTMLElement {
         date.innerHTML = '';
         num = num + 1;
 
+        date.addEventListener('click', (e) =>{
+          this.selecteddate = date.innerHTML;
+          this.selectedmonth = this.month;
+          this.selectedyear = this.year; 
+          console.log(this.selecteddate);
+          this._render();
+          
+      
+
+        });
+
         //Checks to see if the count has reached the max amount of days and then resets the count. 
         if(num > this.numDays[this.month]){
           num = 1; 
         }
 
+      
         //arranging the format of the first 9 numbers
         if(num < 10){
           date.textContent =  '0' + num.toString();
@@ -269,10 +291,6 @@ class Calendar extends HTMLElement {
       }
 
     }
-
-
-    
-  
     
   }
 
@@ -306,8 +324,6 @@ class Calendar extends HTMLElement {
     
   }
 
-
-
   connectedCallback() {
     //Initial render
     this.state = 'content';
@@ -325,8 +341,4 @@ class Calendar extends HTMLElement {
   }
 
 }
-
 window.customElements.define('calendar-info', Calendar);
-
-/**
- */
