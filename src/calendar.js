@@ -155,23 +155,23 @@ class Calendar extends HTMLElement {
   _renderCalendar(){
     return html`
     <tr class = "days">
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Sun</td>
+      <td>Mon</td>
+      <td>Tues</td>
+      <td>Wed</td>
+      <td>Thu</td>
+      <td>Fri</td>
+      <td>Sat</td>
     </tr>
 
     <tr class = "dates A">
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>01</td>
+      <td>02</td>
+      <td>03</td>
+      <td>04</td>
+      <td>05</td>
+      <td>06</td>
+      <td>07</td>
     </tr>
 
     <tr class = "dates B">
@@ -205,9 +205,9 @@ class Calendar extends HTMLElement {
     </tr>
 
     <tr class = "dates E">
-      <td>29</td>
-      <td>30</td>
-      <td>31</td>
+      <td>--</td>
+      <td>--</td>
+      <td>--</td>
       <td>--</td>
       <td>--</td>
       <td>--</td>
@@ -230,7 +230,8 @@ class Calendar extends HTMLElement {
     }
 
     let days = this.shadowRoot.querySelector('.days_table .days');
-    let dates = this.shadowRoot.querySelector('.days_table .dates');
+    let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
+    let code = ['A','B','C','D','E'];
     console.log(dates);
 
     //console.log(days);
@@ -245,12 +246,24 @@ class Calendar extends HTMLElement {
     }
 
     let num = 0;
-    for(let i = 0; i<7; i++){
-      let date = this.shadowRoot.querySelector('.days_table .dates.A td')
-      date.innerHTML = '';
-      num = num + 1;
-      date.textContent = '0' + num.toString();
-      dates.appendChild(date);
+    for(let j =0; j<5; j++){
+      for(let i = 0; i<7; i++){
+        let date = this.shadowRoot.querySelector(`.days_table .dates.${code[j]} td`)
+        date.innerHTML = '';
+        num = num + 1;
+        
+        if(num > this.numDays[this.month]){
+          break;
+        }
+
+        if(num < 10){
+          date.textContent =  '0' + num.toString();
+        }
+        else{
+          date.textContent = num.toString();
+        }
+        dates[j].appendChild(date);
+      }
     }
 
 
