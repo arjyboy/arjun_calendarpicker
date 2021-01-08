@@ -74,7 +74,7 @@ class Calendar extends HTMLElement {
         <div class="year">
 
 
-          <h2 class> ${this.selecteddate} / ${this.selectedmonth + 1} / ${this.selectedyear} </h2> 
+          <h2 class> ${this.dateTitle()} </h2> 
           
           
         </div>
@@ -112,6 +112,7 @@ class Calendar extends HTMLElement {
     </div>
     `
   }
+
 
   /**
    * @desc main render function
@@ -155,6 +156,31 @@ class Calendar extends HTMLElement {
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
 
+  }
+
+  /**
+   * Sets the top date for the calendar
+   */
+  dateTitle(){
+    let date = this.selecteddate
+    let month = this.selectedmonth;
+
+    // if(this.selecteddate < 10){
+    //   date = '0' + this.selecteddate.toString();
+    // }
+    // else{
+    //   date = this.selecteddate.toString();
+    // }
+    
+    if(this.selectedmonth + 1 < 10){
+      month = '0'+ (this.selectedmonth + 1).toString();
+    }
+    else{
+      month = (this.selectedmonth + 1).toString();
+
+    }
+    
+    return date + ' / ' + month + ' / ' + this.selectedyear
   }
 
   /**
@@ -226,22 +252,33 @@ class Calendar extends HTMLElement {
   }
 
   /**
-   * Function that populates the months
+   * Checks to see if leap year
    */
-  getDaysinMonth(){
-    //variables to select the appropriate rows for each dataset 
-    let days = this.shadowRoot.querySelector('.days_table .days');
-    let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
-    let code = ['A','B','C','D','E'];
+  leapyearCheck(){
   
-    //Checks to see if leap year and updates the date array accordingly
     if(this.year % 4 == 0){
       this.numDays[1] = 29;
     }
     else{
       this.numDays[1] = 28;
     }
+  }
 
+  /**
+   * Function that populates the months
+   */
+  getDaysinMonth(){
+
+    //displays calendar after one of the arrows have been pressed 
+    let visibile = this.shadowRoot.querySelector('.bottom');
+    visibile.style.visibility = 'visible';
+    //variables to select the appropriate rows for each dataset 
+    let days = this.shadowRoot.querySelector('.days_table .days');
+    let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
+    let code = ['A','B','C','D','E'];
+
+    //calls leap year check function 
+    this.leapyearCheck();
 
    
 
@@ -261,11 +298,13 @@ class Calendar extends HTMLElement {
         date.innerHTML = '';
         num = num + 1;
 
+        //listens for when a number is clicked and then changes the date at the top accordingly. 
         date.addEventListener('click', (e) =>{
           this.selecteddate = date.innerHTML;
           this.selectedmonth = this.month;
           this.selectedyear = this.year; 
-          console.log(this.selecteddate);
+          
+
           this._render();
           
       
