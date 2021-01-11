@@ -95,11 +95,18 @@
       padding: 1em 1em 1em 1em;
     }
 
-    .dates td:hover, .today{
+    .dates td:hover{
       background-color: var(--highlight);
       border-radius: 2em;
    
     }
+
+    .days_table .dates .selected{
+      background-color: var(--highlight);
+      border-radius: 2em;
+
+    }
+    
 
 
     

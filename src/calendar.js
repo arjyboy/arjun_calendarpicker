@@ -143,7 +143,11 @@ class Calendar extends HTMLElement {
     this.month = this.fulldate.getMonth();
     this.year = this.fulldate.getFullYear();
 
-    //Selected days used for highlighting the colour 
+    /**
+     * Day represents one of the days of the week, 0 = Sunday
+     * Date the number the day corresponds to
+     * The other two are self-explanatory. 
+     */
     this.selectedday = this.day;
     this.selecteddate = this.date; 
     this.selectedmonth = this.month;
@@ -272,10 +276,14 @@ class Calendar extends HTMLElement {
     //displays calendar after one of the arrows have been pressed 
     let visibile = this.shadowRoot.querySelector('.bottom');
     visibile.style.visibility = 'visible';
+
     //variables to select the appropriate rows for each dataset 
     let days = this.shadowRoot.querySelector('.days_table .days');
     let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
     let code = ['A','B','C','D','E'];
+    let num = 0;
+
+
 
     //calls leap year check function 
     this.leapyearCheck();
@@ -290,26 +298,48 @@ class Calendar extends HTMLElement {
       days.appendChild(day);
     }
 
-    //for loop that fills the numbers according to the amonut of days in a particular month 
-    let num = 0;
+    
+
+
+
+    
     for(let j =0; j<5; j++){
       for(let i = 0; i<7; i++){
         let date = this.shadowRoot.querySelector(`.days_table .dates.${code[j]} td`)
         date.innerHTML = '';
+        
+        
+        
         num = num + 1;
 
+                
         //listens for when a number is clicked and then changes the date at the top accordingly. 
         date.addEventListener('click', (e) =>{
+          let selected = this.shadowRoot.querySelector('.days_table .dates .selected');
+
+          if(selected != null || date.classList.contains('selected')){
+            selected.style.removeProperty = 'background-color';
+            selected.classList.remove('selected');
+
+          }
+          
           this.selecteddate = date.innerHTML;
           this.selectedmonth = this.month;
-          this.selectedyear = this.year; 
+          this.selectedyear = this.year;
+
           
+          date.classList.add("selected");
+          
+          console.log(selected);
+          console.log(selected.classList.contains('selected'));
+          // console.log(date.style);
+
 
           this._render();
-          
-      
 
         });
+
+        
 
         //Checks to see if the count has reached the max amount of days and then resets the count. 
         if(num > this.numDays[this.month]){
@@ -318,21 +348,25 @@ class Calendar extends HTMLElement {
 
       
         //arranging the format of the first 9 numbers
+        //then updates the string of the particular date. 
         if(num < 10){
           date.textContent =  '0' + num.toString();
         }
         else{
           date.textContent = num.toString();
         }
-        //adds the number value to the list.
+        //adds the string value to the list. 
         dates[j].appendChild(date);
 
       }
 
     }
+      
     
-  }
+  
 
+  }
+    
 
   /**
    * Function that goes to the next month 
