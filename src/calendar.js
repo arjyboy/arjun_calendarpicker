@@ -315,11 +315,11 @@ class Calendar extends HTMLElement {
                 
         //listens for when a number is clicked and then changes the date at the top accordingly. 
         date.addEventListener('click', (e) =>{
-          let selected = this.shadowRoot.querySelector('.days_table .dates .selected');
+          this.selected = this.shadowRoot.querySelector('.days_table .dates .selected');
 
-          if(selected != null || date.classList.contains('selected')){
-            selected.style.removeProperty = 'background-color';
-            selected.classList.remove('selected');
+          if(this.selected != null || date.classList.contains('selected')){
+            this.selected.style.removeProperty = 'background-color';
+            this.selected.classList.remove('selected');
 
           }
           
@@ -329,17 +329,9 @@ class Calendar extends HTMLElement {
 
           
           date.classList.add("selected");
-          
-          console.log(selected);
-          console.log(selected.classList.contains('selected'));
-          // console.log(date.style);
-
-
           this._render();
 
         });
-
-        
 
         //Checks to see if the count has reached the max amount of days and then resets the count. 
         if(num > this.numDays[this.month]){
@@ -360,6 +352,21 @@ class Calendar extends HTMLElement {
 
       }
 
+    }
+
+    //falsey check 
+    if(this.selected != null){
+      if(this.month != this.selectedmonth){
+        this.selected.style.removeProperty = 'background-color';
+        this.selected.classList.remove('selected');
+        
+      }
+      else{
+        this.selected.style.addProperty = 'background-color';
+        this.selected.classList.add('selected');
+
+      }
+  
     }
       
     
