@@ -74,7 +74,7 @@ class Calendar extends HTMLElement {
         <div class="year">
 
 
-          <h2 class> ${this.dateTitle()} </h2> 
+          <h2 class> ${this._setDateTitle()} </h2> 
           
           
         </div>
@@ -83,7 +83,7 @@ class Calendar extends HTMLElement {
         <div class = "month">
 
          <i  class= "arrow left" @click="${(a) => this.GoToPrevMonth()}"></i> 
-         <h2>${this.months[this.month]}</h2>
+         <h2>${this.months[this.month]} ~ ${this.year}</h2>
          <i class= "arrow right" @click="${(e) => this.GoToNextMonth()}"></i> 
         
         </div>
@@ -146,7 +146,6 @@ class Calendar extends HTMLElement {
     /**
      * Day represents one of the days of the week, 0 = Sunday
      * Date the number the day corresponds to
-     * The other two are self-explanatory. 
      */
     this.selectedday = this.day;
     this.selecteddate = this.date; 
@@ -165,7 +164,7 @@ class Calendar extends HTMLElement {
   /**
    * Sets the top date for the calendar
    */
-  dateTitle(){
+  _setDateTitle(){
     let date = this.selecteddate
     let month = this.selectedmonth;
 
@@ -188,7 +187,8 @@ class Calendar extends HTMLElement {
   }
 
   /**
-   * The calendar date function that fills all the places in 
+   * The calendar date function that fills 
+   * all the appropriate days in.
    */
   _renderCalendar(){
     return html`
@@ -256,7 +256,7 @@ class Calendar extends HTMLElement {
   }
 
   /**
-   * Checks to see if leap year
+   * Checks to see if the year is a leap year. 
    */
   leapyearCheck(){
   
@@ -270,22 +270,25 @@ class Calendar extends HTMLElement {
 
   /**
    * Function that populates the months
+   * with the dates and days. 
    */
   getDaysinMonth(){
 
     //displays calendar after one of the arrows have been pressed 
     let visibile = this.shadowRoot.querySelector('.bottom');
     visibile.style.visibility = 'visible';
+    
 
     //variables to select the appropriate rows for each dataset 
     let days = this.shadowRoot.querySelector('.days_table .days');
     let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
     let code = ['A','B','C','D','E'];
     let num = 0;
+    console.log(dates);
 
 
 
-    //calls leap year check function 
+    //calls leap year check function
     this.leapyearCheck();
 
    
@@ -302,13 +305,11 @@ class Calendar extends HTMLElement {
 
 
 
-    
+    //for loops that append the date to each row of the month by using a running count. 
     for(let j =0; j<5; j++){
       for(let i = 0; i<7; i++){
         let date = this.shadowRoot.querySelector(`.days_table .dates.${code[j]} td`)
         date.innerHTML = '';
-        
-        
         
         num = num + 1;
 
@@ -317,18 +318,21 @@ class Calendar extends HTMLElement {
         date.addEventListener('click', (e) =>{
           this.selected = this.shadowRoot.querySelector('.days_table .dates .selected');
 
-          if(this.selected != null || date.classList.contains('selected')){
+          if(this.selected != null || date.classList.contains('selected') && date.hasAttribute("class" == true)){
             this.selected.style.removeProperty = 'background-color';
             this.selected.classList.remove('selected');
-
+            //console.log("true");
           }
-          
+
+          console.log(date.hasAttribute("class"));
+          //updates the selected variables according to the click 
           this.selecteddate = date.innerHTML;
           this.selectedmonth = this.month;
           this.selectedyear = this.year;
 
           
           date.classList.add("selected");
+          console.log(this.selected);
           this._render();
 
         });
@@ -354,8 +358,12 @@ class Calendar extends HTMLElement {
 
     }
 
+    
+    
+    
+
     //falsey check 
-    if(this.selected != null){
+    if(this.selected != null || this.selected != undefined ){
       if(this.month != this.selectedmonth){
         this.selected.style.removeProperty = 'background-color';
         this.selected.classList.remove('selected');
@@ -368,10 +376,7 @@ class Calendar extends HTMLElement {
       }
   
     }
-      
     
-  
-
   }
     
 
