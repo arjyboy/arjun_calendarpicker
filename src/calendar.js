@@ -129,12 +129,10 @@ class Calendar extends HTMLElement {
     this.month = this.fulldate.getMonth();
     this.year = this.fulldate.getFullYear();
 
+    //Creates a new empty array to fill in the dates of the month 
     this.datesArray = new Array();
 
-    /**
-     * Day represents one of the days of the week, 0 = Sunday
-     * Date the number the day corresponds to
-     */
+
     this.selectedday = this.day;
     this.selecteddate = this.date; 
     this.selectedmonth = this.month;
@@ -146,6 +144,7 @@ class Calendar extends HTMLElement {
     this.daysinweek = [ 'Sun','Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat'];
     this.tableNames = ['dates A','dates B','dates C','dates D','dates E'];
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
+
 
 
   }
@@ -173,7 +172,8 @@ class Calendar extends HTMLElement {
    * Checks to see if the year is a leap year. 
    */
   leapyearCheck(){
-  
+    
+    //Checks what mod of 4 and then updates the value for feb accordingly 
     if(this.year % 4 == 0){
       this.numDays[1] = 29;
     }
@@ -205,6 +205,7 @@ class Calendar extends HTMLElement {
     for(let j =0; j<5; j++){
       this.datesArray[j] = [];
       for(let i = 0; i<7; i++){
+        //checks to see if the number is single digit, and modify it accordingly. 
         if(num < 10 ){
           var place = '0' + num.toString();
         }
@@ -220,33 +221,33 @@ class Calendar extends HTMLElement {
           num = 1; 
         }
         
+        
       }
     }
-    console.log(this.datesArray);
 
+    if(this.month != this.selectedmonth){
+
+    }
+
+    //let firstday = this.shadowRoot.querySelector(``);
     
-
   }
 
   /**
    * Following function highlights the selceted value when pressed 
    */
-  highlightSelected(){
-    this.selected = this.shadowRoot.querySelector('.days_table .dates .selected');
-    this.date = this.shadowRoot.querySelector('.days_table .dates td');
-    console.log(this.date);
+  highlightSelected(fill){
+
+    let selected = this.shadowRoot.querySelector(`.days_table .dates #_${fill}`);
+    console.log(selected);
+    
+    this.selectedmonth =  this.month;
+    this.selectedyear = this.year; 
+    this.selecteddate = fill; 
+
+    this._render(); 
 
     
-
-    
-    //updates the selected variables according to the click 
-    this.selecteddate = this.date.innerHTML;
-    this.selectedmonth = this.month;
-    this.selectedyear = this.year;
-
-    this.date.classList.add("selected");
-    this._render();
-
 
   }
   
@@ -264,11 +265,8 @@ class Calendar extends HTMLElement {
     ${this.tableNames.map ( (name, i) => html `
     <tr class = "${name}">${this.datesArray[i] ? 
       this.datesArray[i].map( (fill) => html`
-        <td @click="${ (b) => this.highlightSelected()}"> ${fill} </td>`) : ''} 
+        <td id="_${fill}" @click="${ (b) => this.highlightSelected(fill)}"> ${fill} </td>`) : ''} 
     </tr>`)}
-
-
-
   
     `
   }
@@ -285,6 +283,7 @@ class Calendar extends HTMLElement {
     }
     this.getDaysinMonth();
     this._render();
+    
     
   }
 

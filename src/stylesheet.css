@@ -49,7 +49,7 @@
     }
     .arrow:hover{
       border: solid black;
-      border-width: 0 0.4rem 0.4rem 0;
+      border-width: 0 0.3rem 0.3rem 0;
       cursor: pointer;
     }
     .right {
