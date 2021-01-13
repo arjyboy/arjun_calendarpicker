@@ -141,8 +141,8 @@ class Calendar extends HTMLElement {
 
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    this.daysinweek = [ 'Sun','Mon', 'Tues', 'Wed', 'Thu', 'Fri', 'Sat'];
-    this.tableNames = ['dates A','dates B','dates C','dates D','dates E'];
+    this.daysinweek = ['Sun','Mon', 'Tues', 'Wed', 'Thu','Fri', 'Sat'];
+    this.tableNames = ['dates A','dates B','dates C','dates D','dates E', 'dates F'];
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
 
@@ -189,41 +189,66 @@ class Calendar extends HTMLElement {
    * with the dates and days. 
    */
   getDaysinMonth(){
+
+    var firstday = new Date(this.year, this.month, 1);
+
+
+    let index = firstday.getDay(); 
+
+    
     
     //intial variable to check 
     let num = 1;
+    let month = this.month
+
     
     //calls leap year check function
     this.leapyearCheck();
 
     //for loops that append the date to each row of the month by using a running count. 
-    for(let j =0; j<5; j++){
+    for(let j = 0; j<6; j++){
       this.datesArray[j] = [];
       for(let i = 0; i<7; i++){
+
+
+        //getting the first day of the month
+        var nextday = new Date(this.year, month, num-index);
+        console.log(nextday);
+        
+        
+
+        
         //checks to see if the number is single digit, and modify it accordingly.
-        if(num < 10 ){
-          var place = '0' + num.toString();
+        if( num - index > 0 && num - index < 10 ){
+          var place = '0' + nextday.getDate().toString();
         }
         else{
-          place = num.toString();
+          place = nextday.getDate().toString();
         }
+        
         
         this.datesArray[j][i]= place;
         
-        num = num + 1; 
+        
+        num = num + 1
 
+        //checks to see if the count has reached the end of the month and then resets it. 
         if(num > this.numDays[this.month]){
+          month = month + 1;
           num = 1; 
         }
+       
+        
         
       }
 
     }
 
+
     
     let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}`)
     if(currentDate != null){
-      if(this.month != this.selectedmonth){
+      if(this.month != this.selectedmonth || this.year != this.selectedyear){
         
         currentDate.removeAttribute("class");
       }
@@ -261,13 +286,16 @@ class Calendar extends HTMLElement {
   /**
    * The calendar date function that fills 
    * all the appropriate days in.
+   * 
    */
   _renderCalendar(){
     return html`
-    
+
     <tr class = "days">
       ${this.daysinweek.map( (day) => html`<th> ${day} </th>`)}
     </tr>
+    
+    
 
     ${this.tableNames.map ( (name, i) => html `
     <tr class = "${name}">${this.datesArray[i] ? 

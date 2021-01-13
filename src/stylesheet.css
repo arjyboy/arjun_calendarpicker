@@ -4,6 +4,7 @@
     --txtcolor: #edf5e1;
     --highlight: #8ee4af;
     --arrow: #05386B;
+    --today: #EAA221;
   
   }
   
@@ -13,7 +14,6 @@
   .calendar-info{
       max-width: 500px; 
       height: 450px;
-
       color: var(--txtcolor)
     }
     .top{
@@ -68,18 +68,11 @@
       
       max-width: 100%;
       width: 100%;
-      height: 20em;
+      height: 23em;
       background-color: var(--arrow);
       display: flex;
       flex-wrap: wrap;  
     
-    }
-    .days, .dates{
-      display: flex;
-      justify-content: space-between;
-      text-align: left;
-      padding: 0 0.9em 0 0.4em;
-  
     }
     .days_table{
       text-align:  center;
@@ -87,10 +80,16 @@
       height: 10%;
       padding: 0.2em 1em 0 1em; 
     }
-
-    .dates{
+    .days, .dates{
       display: flex;
       justify-content: space-between;
+      text-align: left;
+      padding: 0 0.9rem 0 0.4rem;
+  
+    }
+   
+   
+    .dates{
       width: 100%;
     }
     td{
