@@ -1,0 +1,95 @@
+/**
+ * 
+ * 
+ * 
+ * THE FOLLOWING CODE IS A LINKED LIST IMPLEMENTATION OF THE CALENDAR FUNCTION
+ *  getDaysinMonth(){
+
+    //displays calendar after one of the arrows have been pressed 
+    let visibile = this.shadowRoot.querySelector('.bottom');
+    visibile.style.visibility = 'visible';
+
+    //variables to select the appropriate rows for each dataset 
+    let days = this.shadowRoot.querySelector('.days_table .days');
+    let dates = this.shadowRoot.querySelectorAll('.days_table .dates');
+    let code = ['A','B','C','D','E'];
+    let num = 0;
+
+    //calls leap year check function 
+    this.leapyearCheck();
+
+    //for loop to fill the top line with days of the week
+    for(let a = 0; a<this.daysinweek.length; a++){
+      let day = this.shadowRoot.querySelector('.days_table .days td')
+      day.innerHTML = '';
+      day.textContent = this.daysinweek[a];
+      days.appendChild(day);
+    }
+
+    for(let j =0; j<5; j++){
+      for(let i = 0; i<7; i++){
+        let date = this.shadowRoot.querySelector(`.days_table .dates.${code[j]} td`)
+        date.innerHTML = '';
+        
+        
+        
+        num = num + 1;
+
+                
+        //listens for when a number is clicked and then changes the date at the top accordingly. 
+        date.addEventListener('click', (e) =>{
+          this.selected = this.shadowRoot.querySelector('.days_table .dates .selected');
+
+          if(this.selected != null || date.classList.contains('selected')){
+            this.selected.style.removeProperty = 'background-color';
+            this.selected.classList.remove('selected');
+
+          }
+          
+          this.selecteddate = date.innerHTML;
+          this.selectedmonth = this.month;
+          this.selectedyear = this.year;
+
+          
+          date.classList.add("selected");
+          this._render();
+
+        });
+
+        //Checks to see if the count has reached the max amount of days and then resets the count. 
+        if(num > this.numDays[this.month]){
+          num = 1; 
+        }
+
+      
+        //arranging the format of the first 9 numbers
+        //then updates the string of the particular date. 
+        if(num < 10){
+          date.textContent =  '0' + num.toString();
+        }
+        else{
+          date.textContent = num.toString();
+        }
+        //adds the string value to the list. 
+        dates[j].appendChild(date);
+
+      }
+
+    }
+
+    //falsey check 
+    if(this.selected != null){
+      if(this.month != this.selectedmonth){
+        this.selected.style.removeProperty = 'background-color';
+        this.selected.classList.remove('selected');
+        
+      }
+      else{
+        this.selected.style.addProperty = 'background-color';
+        this.selected.classList.add('selected');
+
+      }
+    }
+  }
+    
+*/
