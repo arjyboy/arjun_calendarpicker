@@ -146,7 +146,6 @@ class Calendar extends HTMLElement {
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
 
 
-
   }
 
   /**
@@ -163,6 +162,9 @@ class Calendar extends HTMLElement {
       month = (this.selectedmonth + 1).toString();
 
     }
+    // let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}`);
+    // currentDate.classList.add("selected");
+    // console.log(currentDate);
     
     return date + ' / ' + month + ' / ' + this.selectedyear
   }
@@ -187,25 +189,18 @@ class Calendar extends HTMLElement {
    * with the dates and days. 
    */
   getDaysinMonth(){
-
-    //displays calendar after one of the arrows have been pressed 
-    let visibile = this.shadowRoot.querySelector('.bottom');
-    visibile.style.visibility = 'visible';
     
-    
-    //sets the number to the first date of the month in milliseconds
+    //intial variable to check 
     let num = 1;
     
-
     //calls leap year check function
     this.leapyearCheck();
-
 
     //for loops that append the date to each row of the month by using a running count. 
     for(let j =0; j<5; j++){
       this.datesArray[j] = [];
       for(let i = 0; i<7; i++){
-        //checks to see if the number is single digit, and modify it accordingly. 
+        //checks to see if the number is single digit, and modify it accordingly.
         if(num < 10 ){
           var place = '0' + num.toString();
         }
@@ -221,15 +216,23 @@ class Calendar extends HTMLElement {
           num = 1; 
         }
         
-        
       }
-    }
-
-    if(this.month != this.selectedmonth){
 
     }
 
-    //let firstday = this.shadowRoot.querySelector(``);
+    
+    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}`)
+    if(currentDate != null){
+      if(this.month != this.selectedmonth){
+        
+        currentDate.removeAttribute("class");
+      }
+      else{
+        currentDate.classList.add("selected");
+      }
+
+    }
+    
     
   }
 
@@ -239,15 +242,21 @@ class Calendar extends HTMLElement {
   highlightSelected(fill){
 
     let selected = this.shadowRoot.querySelector(`.days_table .dates #_${fill}`);
-    console.log(selected);
+    let date = this.shadowRoot.querySelector(`.days_table .dates .selected`);
+
+
+    if(date != null && date.classList.contains("selected")){
+      date.style.removeProperty = 'background-color';
+      date.removeAttribute("class");
+    }
     
+    //Updates the selected variables to 
     this.selectedmonth =  this.month;
     this.selectedyear = this.year; 
     this.selecteddate = fill; 
-
-    this._render(); 
-
     
+    selected.classList.add("selected");
+    this._render(); 
 
   }
   
@@ -304,6 +313,7 @@ class Calendar extends HTMLElement {
 
   connectedCallback() {
     //Initial render
+    this.getDaysinMonth();
     this.state = 'content';
 
   }
@@ -322,7 +332,11 @@ class Calendar extends HTMLElement {
 window.customElements.define('calendar-info', Calendar);
 
 /**
-      getDaysinMonth(){
+ * 
+ * 
+ * 
+ * THE FOLLOWING CODE IS A LINKED LIST IMPLEMENTATION OF THE CALENDAR FUNCTION
+ *  getDaysinMonth(){
 
     //displays calendar after one of the arrows have been pressed 
     let visibile = this.shadowRoot.querySelector('.bottom');
@@ -410,4 +424,5 @@ window.customElements.define('calendar-info', Calendar);
       }
     }
   }
-     */
+    
+*/
