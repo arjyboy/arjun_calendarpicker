@@ -236,7 +236,7 @@ class Calendar extends HTMLElement {
     }
     
     
-    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}, [month="${this.selectedmonth}"]`)
+    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}, [month="${this.selectedmonth}"]`);
  
     
     
