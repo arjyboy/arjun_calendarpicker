@@ -135,7 +135,6 @@ class Calendar extends HTMLElement {
 
     this.selectedday = this.day;
     this.selecteddate = this.date; 
-    
     this.selectedmonth = this.month;
     this.selectedyear = this.year; 
 
@@ -154,13 +153,14 @@ class Calendar extends HTMLElement {
    */
   _setDateTitle(){
     let date = this.selecteddate
-    let month = this.selectedmonth;
+    let month = parseInt(this.selectedmonth, 10);
     
-    if(this.selectedmonth + 1 < 10){
-      month = '0'+ (this.selectedmonth + 1).toString();
+    
+    if(month + 1 < 10){
+      month = '0' + (month + 1).toString()
     }
     else{
-      month = (this.selectedmonth + 1).toString();
+      month = (month + 1).toString();
 
     }
     
@@ -231,8 +231,6 @@ class Calendar extends HTMLElement {
         
       }
 
-      
-
     }
     
     
@@ -246,12 +244,14 @@ class Calendar extends HTMLElement {
       //checks to see if the two variables match with their selected variables
       if(this.month != this.selectedmonth || this.year != this.selectedyear){
         console.log("yessir");
+        console.log(currentDate);
         currentDate.removeAttribute("class");
         
         
       }
       else{
         console.log("negative captain");
+        console.log(currentDate);
         currentDate.setAttribute("class", "selected");
 
       }
@@ -266,28 +266,25 @@ class Calendar extends HTMLElement {
   highlightSelected(fill){
 
 
-    let selected = this.shadowRoot.querySelector(`.days_table .dates #_${fill.date}_${fill.month}, [month="${fill.month}]`);
+    let selected = this.shadowRoot.querySelector(`.days_table .dates #_${fill.date}_${fill.month}`);
     let dates = this.shadowRoot.querySelector(`.days_table .dates .selected`);
 
     console.log(selected);
-
-
 
     if(dates != null && dates.classList.contains("selected")){
       dates.style.removeProperty = 'background-color';
       dates.removeAttribute("class");
     }
     
-    if(selected != null){
-      //Updates the selected variables accordingly. 
-      this.selecteddate = fill.date;
-      this.selectedmonth =  this.month;
-      this.selectedyear = this.year; 
-      
-      
-      selected.classList.add("selected");
 
-    }
+    //Updates the selected variables accordingly. 
+    this.selecteddate = fill.date;
+    this.selectedmonth =  fill.month;
+    this.selectedyear = fill.year; 
+    
+    selected.classList.add("selected");
+
+    
     this._render(); 
 
   }
@@ -347,6 +344,9 @@ class Calendar extends HTMLElement {
   connectedCallback() {
     //Initial render
     this.getDaysinMonth();
+    // let firsthighlight = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}`)
+    // console.log(firsthighlight);
+    // firsthighlight.setAttribute("class", "selected");
     this.state = 'content';
 
   }
