@@ -132,7 +132,7 @@ class Calendar extends HTMLElement {
     //Creates a new empty array to fill in the dates of the month 
     this.datesArray = new Array();
 
-
+    //Select variables that are used to store the current/selected date by the user. 
     this.selectedday = this.day;
     this.selecteddate = this.date; 
     this.selectedmonth = this.month;
@@ -153,6 +153,7 @@ class Calendar extends HTMLElement {
    */
   _setDateTitle(){
     let date = this.selecteddate
+    //converts the string into an integer, 10 represents the base number to convert the string to 
     let month = parseInt(this.selectedmonth, 10);
     
     
@@ -188,6 +189,8 @@ class Calendar extends HTMLElement {
    */
   getDaysinMonth(){
 
+
+    //initial variables to declare 
     var firstday = new Date(this.year, this.month, 1);
     let index = firstday.getDay(); 
     let num = 1;
@@ -209,14 +212,13 @@ class Calendar extends HTMLElement {
         var Year = nextday.getFullYear().toString();
         var Month = nextday.getMonth().toString();
         
-        //checks to see if the number is single digit, and modify it accordingly.
+        //checks to see if the number is single digit, and modifies it accordingly.
         if( num - index > 0 && num - index < 10 ){
           var date = '0' + nextday.getDate().toString();
 
         }
         else{
           date = nextday.getDate().toString();
-          // placemonth = nextday.getMonth.toString();
         }
         
         
@@ -229,35 +231,46 @@ class Calendar extends HTMLElement {
           num = 1; 
         }
         
-      }
+      }//inner for loop
 
-    }
+    }//end of for loop to load dates
     
-    
-    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}, [month="${this.selectedmonth}"]`);
+    //var today = this.datesArray.find(t =>this.datesArray.date == this.date);
+
+    //this.highlightRemove();
+
+
+  }
+
+  /**
+   * Following function removes the highlighted date when the month is changed,
+   * and puts the highlight back once 
+   */
+  highlightRemove(){
+    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}`)
+    let selectedDate = this.shadowRoot.querySelector(`.days_table .dates .selected`);
  
-    
-    
     //falsey check to ensure null references arent being passed through. 
-    if(currentDate != null){
+    if(selectedDate != null){
 
       //checks to see if the two variables match with their selected variables
-      if(this.month != this.selectedmonth || this.year != this.selectedyear){
-        console.log("yessir");
-        console.log(currentDate);
-        currentDate.removeAttribute("class");
-        
-        
+      if(this.month != this.selectedmonth || this.year != this.selectedyear && selectedDate.classList.contains("selected")){
+        console.log("if");
+        selectedDate.removeAttribute("class");
       }
       else{
-        console.log("negative captain");
-        console.log(currentDate);
-        currentDate.setAttribute("class", "selected");
+        console.log("else");
+        currentDate.classList.add("selected");
 
       }
+      console.log(currentDate);
+      console.log(selectedDate);
       
     }
-    console.log(currentDate);
+    else{
+      console.log("NULL is occuring");
+    }
+
   }
 
   /**
@@ -265,12 +278,9 @@ class Calendar extends HTMLElement {
    */
   highlightSelected(fill){
 
-
-    let selected = this.shadowRoot.querySelector(`.days_table .dates #_${fill.date}_${fill.month}`);
     let dates = this.shadowRoot.querySelector(`.days_table .dates .selected`);
-
-    console.log(selected);
-
+    let selected = this.shadowRoot.querySelector(`.days_table .dates #_${fill.date}_${fill.month}`);
+    
     if(dates != null && dates.classList.contains("selected")){
       dates.style.removeProperty = 'background-color';
       dates.removeAttribute("class");
@@ -283,6 +293,9 @@ class Calendar extends HTMLElement {
     this.selectedyear = fill.year; 
     
     selected.classList.add("selected");
+
+    console.log(dates);
+    console.log(selected);
 
     
     this._render(); 
@@ -344,9 +357,6 @@ class Calendar extends HTMLElement {
   connectedCallback() {
     //Initial render
     this.getDaysinMonth();
-    // let firsthighlight = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}`)
-    // console.log(firsthighlight);
-    // firsthighlight.setAttribute("class", "selected");
     this.state = 'content';
 
   }
