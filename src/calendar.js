@@ -196,6 +196,7 @@ class Calendar extends HTMLElement {
     let num = 1;
     let month = this.month
     let year = this.year; 
+    let prevmonth;
 
     
     //calls leap year check function
@@ -238,27 +239,30 @@ class Calendar extends HTMLElement {
     this._render();
 
 
-    //finds all dates for the current month and then changes the colour accordingly. 
+    setTimeout(() => {
+      
+    
+    //finds all dates for the current month and then changes the colour accordingly.
     var currentmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month}"]`);
     currentmonth.forEach( (c) =>{
       c.style.color = 'white';
-      //console.log(c);
     })
 
 
     //find all dates that come before the first day of the month.
     if(this.month == 0){
-      var prevmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month + 11}"]`);
+      prevmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month + 11}"]`);
     }
     else{
       prevmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month - 1}"]`);
     }
-    //highlights the days grey
+    
+      //highlights the days grey
     prevmonth.forEach( (e) => {
       e.style.color = 'grey';
-      //console.log(e);~
-    });
-
+      //console.log(e);
+    })  
+    
     
 
     //find all dates that come after the last day of the month.
@@ -269,15 +273,14 @@ class Calendar extends HTMLElement {
       nextmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month + 1}"]`);
 
     }
-    console.log(prevmonth);
     //higlights the days grey 
     nextmonth.forEach( (a) => {
       a.style.color = 'grey';
-      //console.log(a);
+
     });
 
-
-
+    this._render();
+  }, 10); 
     
   }
 
