@@ -231,15 +231,54 @@ class Calendar extends HTMLElement {
           num = 1; 
         }
         
-      }//inner for loop
+      }//inner for loop ends 
 
-    }//end of for loop to load dates
+    }//end of outter for loop to load dates
+
+    this._render();
+
+
+    //finds all dates for the current month and then changes the colour accordingly. 
+    var currentmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month}"]`);
+    currentmonth.forEach( (c) =>{
+      c.style.color = 'white';
+      //console.log(c);
+    })
+
+
+    //find all dates that come before the first day of the month.
+    if(this.month == 0){
+      var prevmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month + 11}"]`);
+    }
+    else{
+      prevmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month - 1}"]`);
+    }
+    //highlights the days grey
+    prevmonth.forEach( (e) => {
+      e.style.color = 'grey';
+      //console.log(e);~
+    });
+
     
-    //var today = this.datesArray.find(t =>this.datesArray.date == this.date);
 
-    //this.highlightRemove();
+    //find all dates that come after the last day of the month.
+    if(this.month == 11){
+      var nextmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month - 11}"]`);
+    }
+    else{
+      nextmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month + 1}"]`);
+
+    }
+    console.log(prevmonth);
+    //higlights the days grey 
+    nextmonth.forEach( (a) => {
+      a.style.color = 'grey';
+      //console.log(a);
+    });
 
 
+
+    
   }
 
   /**
@@ -247,28 +286,19 @@ class Calendar extends HTMLElement {
    * and puts the highlight back once 
    */
   highlightRemove(){
-    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}`)
-    let selectedDate = this.shadowRoot.querySelector(`.days_table .dates .selected`);
- 
-    //falsey check to ensure null references arent being passed through. 
-    if(selectedDate != null){
+    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}`);
+    let selectedDate = this.shadowRoot.querySelector(`.days_table .dates .selected, [month="${this.selectedmonth}"]`);
+    
+    console.log(currentDate);
+    console.log(selectedDate);
 
-      //checks to see if the two variables match with their selected variables
-      if(this.month != this.selectedmonth || this.year != this.selectedyear && selectedDate.classList.contains("selected")){
-        console.log("if");
-        selectedDate.removeAttribute("class");
-      }
-      else{
-        console.log("else");
-        currentDate.classList.add("selected");
+    if(selectedDate != null && selectedDate.classList.contains("selected")){
+      selectedDate.style.removeProperty('background-color');
+      selectedDate.removeAttribute("class");
 
-      }
-      console.log(currentDate);
-      console.log(selectedDate);
-      
     }
     else{
-      console.log("NULL is occuring");
+      console.log("coming out as null")
     }
 
   }
@@ -294,7 +324,7 @@ class Calendar extends HTMLElement {
     
     selected.classList.add("selected");
 
-    console.log(dates);
+    //console.log(dates);
     console.log(selected);
 
     
