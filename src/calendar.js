@@ -73,7 +73,7 @@ class Calendar extends HTMLElement {
 
         <div class="year">
 
-          <h2 class> ${this._setDateTitle()} </h2> 
+          <h2 class>Selected Date: ${this._setDateTitle()} </h2> 
 
         </div>
 
@@ -142,8 +142,10 @@ class Calendar extends HTMLElement {
     //Array insitliastion of key values in a calendar using the current day as the reference point. 
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.daysinweek = ['Sun','Mon', 'Tues', 'Wed', 'Thu','Fri', 'Sat'];
-    this.tableNames = ['dates A','dates B','dates C','dates D','dates E', 'dates F'];
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
+     //Name of rows, that will hold the dates  
+
+     this.tableNames = ['dates A','dates B','dates C','dates D','dates E', 'dates F'];
 
 
   }
@@ -196,7 +198,7 @@ class Calendar extends HTMLElement {
     let num = 1;
     let month = this.month
     let year = this.year; 
-    let prevmonth;
+
 
     
     //calls leap year check function
@@ -239,71 +241,61 @@ class Calendar extends HTMLElement {
     this._render();
 
 
-    setTimeout(() => {
-      
-    
-    //finds all dates for the current month and then changes the colour accordingly.
-    var currentmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month}"]`);
-    currentmonth.forEach( (c) =>{
-      c.style.color = 'white';
-    })
-
-
-    //find all dates that come before the first day of the month.
-    if(this.month == 0){
-      prevmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month + 11}"]`);
+    //Waits for all dates to be added into the month and then executes the code below 
+    //setTimeout(() => {
+    var currentday = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}_${this.selectedyear}`);
+    if(currentday != null){
+      currentday.setAttribute("selected", "true");
     }
-    else{
-      prevmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month - 1}"]`);
-    }
-    
-      //highlights the days grey
-    prevmonth.forEach( (e) => {
-      e.style.color = 'grey';
-      //console.log(e);
-    })  
-    
-    
-
-    //find all dates that come after the last day of the month.
-    if(this.month == 11){
-      var nextmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month - 11}"]`);
-    }
-    else{
-      nextmonth = this.shadowRoot.querySelectorAll(`.days_table .dates tr td, [month="${this.month + 1}"]`);
-
-    }
-    //higlights the days grey 
-    nextmonth.forEach( (a) => {
-      a.style.color = 'grey';
-
-    });
-
-    this._render();
-  }, 10); 
     
   }
 
   /**
-   * Following function removes the highlighted date when the month is changed,
-   * and puts the highlight back once 
+   * Function to set the flag of dates belonging to the next month 
    */
-  highlightRemove(){
-    let currentDate = this.shadowRoot.querySelector(`.days_table .dates #_${this.selecteddate}_${this.selectedmonth}`);
-    let selectedDate = this.shadowRoot.querySelector(`.days_table .dates .selected, [month="${this.selectedmonth}"]`);
+  nextMonthFlag(fill){
+    if(this.month == 11 && fill.month == 0){
+      return true; 
+    }
+    else if(fill.month == this.month + 1){
+      console.log(fill, this.month + 1);
+      return true;
+    }
+    return false; 
     
-    console.log(currentDate);
-    console.log(selectedDate);
+    
 
-    if(selectedDate != null && selectedDate.classList.contains("selected")){
-      selectedDate.style.removeProperty('background-color');
-      selectedDate.removeAttribute("class");
+  }
 
+  /**
+   * Function to set the flag of dates belonging to the previous month 
+   */
+  prevMonthFlag(fill){
+    if(this.month == 0 && fill.month == 11){
+      console.log(fill, this.month);
+      return true; 
+    }
+    else if(fill.month == this.month - 1){
+      
+      return true; 
+  
+    }
+    return false; 
+
+  }
+
+  /**
+   * Function to set the flag false or true depending on the current render of the calendar. 
+  //  */
+  highlightFlag(fill){
+    //checks to se
+    if(this.selectedmonth == fill.month && this.selectedyear == fill.year && this.selecteddate == fill.date){
+      return true; 
     }
     else{
-      console.log("coming out as null")
+      return false; 
     }
-
+    
   }
 
   /**
@@ -311,25 +303,10 @@ class Calendar extends HTMLElement {
    */
   highlightSelected(fill){
 
-    let dates = this.shadowRoot.querySelector(`.days_table .dates .selected`);
-    let selected = this.shadowRoot.querySelector(`.days_table .dates #_${fill.date}_${fill.month}`);
-    
-    if(dates != null && dates.classList.contains("selected")){
-      dates.style.removeProperty = 'background-color';
-      dates.removeAttribute("class");
-    }
-    
-
     //Updates the selected variables accordingly. 
     this.selecteddate = fill.date;
     this.selectedmonth =  fill.month;
     this.selectedyear = fill.year; 
-    
-    selected.classList.add("selected");
-
-    //console.log(dates);
-    console.log(selected);
-
     
     this._render(); 
 
@@ -352,7 +329,8 @@ class Calendar extends HTMLElement {
     ${this.tableNames.map ( (name, i) => html `
     <tr class = "${name}">${this.datesArray[i] ? 
       this.datesArray[i].map( (fill) => html`
-        <td id="_${fill.date}_${fill.month}" month="${fill.month}" @click="${ (b) => this.highlightSelected(fill)}"> ${fill.date} </td>`) : ''} 
+        <td id="_${fill.date}_${fill.month}_${fill.year}" month="${fill.month}" ?selected = "${this.highlightFlag(fill)}" ?nextmonth ="${this.nextMonthFlag(fill)}"  
+        ?prevmonth="${this.prevMonthFlag(fill)}" @click="${ (b) => this.highlightSelected(fill)}"> ${fill.date} </td>`) : ''} 
     </tr>`)}
 
     `
