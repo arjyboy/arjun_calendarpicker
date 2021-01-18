@@ -7,11 +7,13 @@
     --today: #EAA221;
   
   }
+
+
   
   /**
     * TOP half of the calendar picker
     */
-  .calendar-info{
+  .calendar-info{ 
       max-width: 500px; 
       height: 450px;
       color: var(--txtcolor)

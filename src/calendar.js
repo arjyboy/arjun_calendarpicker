@@ -15,7 +15,7 @@ class Calendar extends HTMLElement {
     ${this._getStateTemplate()}
   
   </div>
-  `;
+  `
 
   /**
    * @desc this template is shown when our component is in an error state
@@ -258,7 +258,6 @@ class Calendar extends HTMLElement {
       return true; 
     }
     else if(fill.month == this.month + 1){
-      console.log(fill, this.month + 1);
       return true;
     }
     return false; 
@@ -272,7 +271,6 @@ class Calendar extends HTMLElement {
    */
   prevMonthFlag(fill){
     if(this.month == 0 && fill.month == 11){
-      console.log(fill, this.month);
       return true; 
     }
     else if(fill.month == this.month - 1){
