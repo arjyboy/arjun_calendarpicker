@@ -14,8 +14,8 @@
     * TOP half of the calendar picker
     */
   .calendar-info{ 
-      max-width: 500px; 
-      height: 450px;
+      max-width: 450px; 
+      height: 550px;
       color: var(--txtcolor)
     }
     .top{

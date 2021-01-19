@@ -7,7 +7,6 @@ class CalendarSlider extends HTMLElement{
      */
   _template = () => html`
   <style>
-    
   </style>
   <div class="container">
     ${this._getStateTemplate()}
@@ -62,12 +61,24 @@ class CalendarSlider extends HTMLElement{
   _getRouteTemplate(){
     return html`
     <style>
+        .content{
+            display: flex;
+        }
 
     </style>
     <div class="content">
-        <h1>Here we go again </h1>
-        
-      
+        <div class = "_month">
+            Month
+        </div>
+
+        <div class = "_date"> 
+            Date 
+        </div>
+
+        <div class = "_year">
+            Year
+        </div> 
+
     </div>
     `
   }
