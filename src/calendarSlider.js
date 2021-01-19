@@ -63,14 +63,14 @@ class CalendarSlider extends HTMLElement{
     <style>
         .content{
           display: flex; 
-          justify-content: space-between; 
-        }
-        div{
-          border: solid green;
+          
         }
         ._year,._month,._date{
           display: flex;
-          padding: 1rem 1rem 1rem 1rem;
+          padding: 1rem 0 1rem 1rem;
+          border: groove;
+          border-width: 1rem 0 1rem 0;
+          justify-content: space-between; 
           align-items: center;
             
         }
@@ -78,6 +78,7 @@ class CalendarSlider extends HTMLElement{
           padding: 20px;
         }
         .arrow{
+           
           color: black; 
           border: solid;
           border-width: 1rem 1rem 0 0;
