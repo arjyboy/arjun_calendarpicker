@@ -62,41 +62,60 @@ class CalendarSlider extends HTMLElement{
     return html`
     <style>
         .content{
-            display: flex;
+          display: flex; 
+          justify-content: space-between; 
+        }
+        div{
+          border: solid green;
+        }
+        ._year,._month,._date{
+          display: flex;
+          padding: 1rem 1rem 1rem 1rem;
+          align-items: center;
+            
+        }
+        h2{
+          padding: 20px;
         }
         .arrow{
-            color: black; 
-            border: solid var(--arrow);
-            border-width: 0.2rem 0.2rem 0 0;
-            width: 0.6rem;
-            height: 0.6rem;
+          color: black; 
+          border: solid;
+          border-width: 1rem 1rem 0 0;
+          width: 1rem;
+          height: 1rem;
             
-            padding: 0.2rem;
         }
-        .top{
-            transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
+        .arrow.top{
+          transform: rotate(-45deg);
         }
-        .bottom{
-            transform: rotate(135deg);
-            -webkit-transform: rotate(135deg);
+        .arrow.bottom{
+          transform: rotate(135deg);
+        }
+        .arrow:hover{
+          color: red; 
         }
         
 
     </style>
     <div class="content">
-    
-        <i class = "arrow top"></i>
-        <div class = "_month">Month</div>
-        <i class = "arrow bottom"></i>
+        
+        <div class = "_date">
+            <i class = "arrow top"></i>
+            <h2>Date</h2>
+            <i class = "arrow bottom"></i>
+        </div>
 
-        <i class = "arrow top"></i>
-        <div class = "_date"> Date </div>
-        <i class = "arrow bottom"></i>
+        <div class="_month">
+            <i class = "arrow top"></i>
+            <h2> Month </h2>
+            <i class = "arrow bottom"></i>
+        </div>
 
-        <i class = "arrow top"></i>
-        <div class = "_year">Year</div> 
-        <i class = "arrow bottom"></i>
+        <div class = "_year">
+            <i class = "arrow top"></i>
+            <h2>Year</h2> 
+            <i class = "arrow bottom"></i>
+        </div>
 
     </div>
     `
