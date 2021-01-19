@@ -64,20 +64,39 @@ class CalendarSlider extends HTMLElement{
         .content{
             display: flex;
         }
+        .arrow{
+            color: black; 
+            border: solid var(--arrow);
+            border-width: 0.2rem 0.2rem 0 0;
+            width: 0.6rem;
+            height: 0.6rem;
+            
+            padding: 0.2rem;
+        }
+        .top{
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+        .bottom{
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
+        
 
     </style>
     <div class="content">
-        <div class = "_month">
-            Month
-        </div>
+    
+        <i class = "arrow top"></i>
+        <div class = "_month">Month</div>
+        <i class = "arrow bottom"></i>
 
-        <div class = "_date"> 
-            Date 
-        </div>
+        <i class = "arrow top"></i>
+        <div class = "_date"> Date </div>
+        <i class = "arrow bottom"></i>
 
-        <div class = "_year">
-            Year
-        </div> 
+        <i class = "arrow top"></i>
+        <div class = "_year">Year</div> 
+        <i class = "arrow bottom"></i>
 
     </div>
     `
