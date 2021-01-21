@@ -30,10 +30,7 @@
       display: flex;
       justify-content: space-evenly;
     }
-    .year h2:hover{
-      background-color: var(--arrow);
-      padding: 0 0.2em 0 0.2em;
-    }
+    
     .month{
       display: flex;
       justify-content: space-between;
@@ -62,6 +59,10 @@
       transform: rotate(135deg);
       -webkit-transform: rotate(135deg);
     }
+    input{
+      display: none;
+    }
+    
 
 /**
   * BOTTOM half of the calendar picker. 

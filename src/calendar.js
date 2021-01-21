@@ -72,10 +72,13 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
+         <h2>${this._setDateTitle()} <input></h2>
+         
+        </div><!-- end of year class -->
 
-          <h2 class>Selected Date: ${this._setDateTitle()} </h2> 
-
-        </div>
+        
+        <button class = "edit1" @click ="${(g) => this.EditCustomDate()}">Edit</button>
+        
 
         <div class = "month">
 
@@ -83,9 +86,9 @@ class Calendar extends HTMLElement {
          <h2>${this.months[this.month]} ~ ${this.year}</h2>
          <i class= "arrow right" @click="${(e) => this.GoToNextMonth()}"></i> 
         
-        </div>
+        </div><!-- end of month class -->
 
-      </div> 
+      </div><!-- end of top class -->
 
       <div class = "bottom">
 
@@ -93,9 +96,9 @@ class Calendar extends HTMLElement {
           ${this._renderCalendar()}
         </table>
 
-      </div> 
+      </div> <!-- end of bottom class -->
       
-    </div>
+    </div><!-- end of calendar info class -->
     `
   }
 
@@ -120,6 +123,9 @@ class Calendar extends HTMLElement {
     this._shadowRoot = this.attachShadow({ 'mode': 'open' });
     this._state = 'loading';
 
+    this.minYear = 2000;
+    this.maxYear = 2100; 
+
     //Gets the current full date in the format ( mm , day, time, timezone, year)
     this.fulldate = new Date();
 
@@ -143,10 +149,16 @@ class Calendar extends HTMLElement {
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.daysinweek = ['Sun','Mon', 'Tues', 'Wed', 'Thu','Fri', 'Sat'];
     this.numDays = [31, 28, 31,30,31,30,31,31,30,31,30,31];
+    
      //Name of rows, that will hold the dates  
-
      this.tableNames = ['dates A','dates B','dates C','dates D','dates E', 'dates F'];
 
+
+  }
+
+
+  EditCustomDate(){
+    let customeedit = this.shadowRoot.querySelector(`.days_table .top .year. .edit1`);
 
   }
 
@@ -198,8 +210,7 @@ class Calendar extends HTMLElement {
     let num = 1;
     let month = this.month
     let year = this.year; 
-
-
+    
     
     //calls leap year check function
     this.leapyearCheck();
@@ -297,15 +308,13 @@ class Calendar extends HTMLElement {
   }
 
   /**
-   * Following function highlights the selceted value when pressed 
+   * Following function highlights the selceted values. 
    */
   highlightSelected(fill){
-
     //Updates the selected variables accordingly. 
     this.selecteddate = fill.date;
-    this.selectedmonth =  fill.month;
+    this.selectedmonth = fill.month;
     this.selectedyear = fill.year; 
-    
     this._render(); 
 
   }
@@ -322,8 +331,6 @@ class Calendar extends HTMLElement {
       ${this.daysinweek.map( (day) => html`<th> ${day} </th>`)}
     </tr>
     
-    
-
     ${this.tableNames.map ( (name, i) => html `
     <tr class = "${name}">${this.datesArray[i] ? 
       this.datesArray[i].map( (fill) => html`
@@ -336,7 +343,7 @@ class Calendar extends HTMLElement {
 
 
   /**
-   * Function that goes to the next month 
+   * Function that changes to the next month 
    */
   GoToNextMonth(){
     this.month++;
@@ -349,7 +356,7 @@ class Calendar extends HTMLElement {
   }
 
   /**
-   * Function that goes to the previous month 
+   * Function that changes to the previous month 
    */
   GoToPrevMonth(){
     this.month--;
