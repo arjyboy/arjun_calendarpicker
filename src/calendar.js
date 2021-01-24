@@ -72,12 +72,12 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-         <h2>${this._setDateTitle()} <input></h2>
+         <h2>${this._setDateTitle()} <input placeholder="dd/mm/yyyy"></h2>
          
         </div><!-- end of year class -->
 
         
-        <button class = "edit1" @click ="${(g) => this.EditCustomDate()}">Edit</button>
+        <button id ="customDate" class = "edit1" @click ="${(g) => this.EditCustomDate()}">Edit</button>
         
 
         <div class = "month">
@@ -123,6 +123,8 @@ class Calendar extends HTMLElement {
     this._shadowRoot = this.attachShadow({ 'mode': 'open' });
     this._state = 'loading';
 
+
+    //sets the minimum year and maximum year of the calendar. 
     this.minYear = 2000;
     this.maxYear = 2100; 
 
@@ -157,8 +159,28 @@ class Calendar extends HTMLElement {
   }
 
 
+
+/**
+ * Following function changes the edit button and edits the chosen datee. 
+ */
   EditCustomDate(){
-    let customeedit = this.shadowRoot.querySelector(`.days_table .top .year. .edit1`);
+    this.display = !this.display; 
+    let customeedit = this.shadowRoot.querySelector(`.calendar-info .top .year input`);
+    let button = this.shadowRoot.querySelector(`.calendar-info .top .edit1`);
+    let submitedit = this.shadowRoot.getElementById("customeDate").value; 
+
+    console.log(submitedit);
+    
+    
+    if(this.display){
+      customeedit.style.display = 'inline';
+      button.innerText = 'Submit';
+    }
+    else{
+      customeedit.style.display = 'none';
+      button.innerText = 'Edit';
+    }
+    
 
   }
 
@@ -210,7 +232,7 @@ class Calendar extends HTMLElement {
     let num = 1;
     let month = this.month
     let year = this.year; 
-    
+
     
     //calls leap year check function
     this.leapyearCheck();
@@ -272,9 +294,7 @@ class Calendar extends HTMLElement {
       return true;
     }
     return false; 
-    
-    
-
+  
   }
 
   /**

@@ -8,8 +8,6 @@
   
   }
 
-
-  
   /**
     * TOP half of the calendar picker
     */
@@ -89,7 +87,6 @@
       padding: 0 0.9rem 0 0.4rem;
   
     }
-   
     .dates{
       width: 100%;
     }
@@ -100,10 +97,10 @@
 
     .dates td:hover, td[selected]{
       background-color: var(--highlight);
+      color: var(--today);
       border-radius: 1rem;
    
     }
-
     td[prevmonth], td[nextmonth]{
       color: grey;
     }
