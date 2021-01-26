@@ -72,12 +72,12 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-         <h2>${this._setDateTitle()} <input placeholder="dd/mm/yyyy"></h2>
+         <h2>${this._setDateTitle()} <input id ="customDate" placeholder="ddmmyyyy" @keydown = "${(e) => this.setDate(e)}"></h2>
          
         </div><!-- end of year class -->
 
         
-        <button id ="customDate" class = "edit1" @click ="${(g) => this.EditCustomDate()}">Edit</button>
+        <button  class = "edit1" @click ="${(g) => this.EditCustomDate()}">Edit</button>
         
 
         <div class = "month">
@@ -167,9 +167,6 @@ class Calendar extends HTMLElement {
     this.display = !this.display; 
     let customeedit = this.shadowRoot.querySelector(`.calendar-info .top .year input`);
     let button = this.shadowRoot.querySelector(`.calendar-info .top .edit1`);
-    let submitedit = this.shadowRoot.getElementById("customeDate").value; 
-
-    console.log(submitedit);
     
     
     if(this.display){
@@ -204,6 +201,20 @@ class Calendar extends HTMLElement {
     return date + ' / ' + month + ' / ' + this.selectedyear
   }
 
+  /**
+   * Function to set the custome date after enter has been pressed
+   */
+  setDate(event){
+    if(event.keyCode == 13){
+      //gets the value on the input field of the date has been submitted; 
+      let inputvalue = this.shadowRoot.getElementById("customDate").value; 
+      console.log(inputvalue);
+      
+    }
+    else{
+      console.log("Doesnt work"); 
+    }
+  }
   
   /**
    * Checks to see if the year is a leap year. 
