@@ -72,7 +72,7 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-         <h2>${this._setDateTitle()} <input id ="customDate" placeholder="ddmmyyyy" @keydown = "${(e) => this.setDate(e)}"></h2>
+         <h2>${this._setDateTitle()} <input id ="customDate" maxlength="8" placeholder="ddmmyyyy" @keydown = "${(e) => this.setDate(e)}"></h2>
          
         </div><!-- end of year class -->
 
@@ -125,7 +125,7 @@ class Calendar extends HTMLElement {
 
 
     //sets the minimum year and maximum year of the calendar. 
-    this.minYear = 2000;
+    this.minYear = 1900;
     this.maxYear = 2100; 
 
     //Gets the current full date in the format ( mm , day, time, timezone, year)
@@ -171,7 +171,7 @@ class Calendar extends HTMLElement {
     
     if(this.display){
       customeedit.style.display = 'inline';
-      button.innerText = 'Submit';
+      button.style.display = 'none';
     }
     else{
       customeedit.style.display = 'none';
@@ -201,14 +201,43 @@ class Calendar extends HTMLElement {
     return date + ' / ' + month + ' / ' + this.selectedyear
   }
 
+  // isCharacterALetter(char) {
+  //   return (/[a-zA-Z]/).test(char);
+  // }
+
   /**
    * Function to set the custome date after enter has been pressed
+   * Keycode for numbers is from 48:57
    */
   setDate(event){
     if(event.keyCode == 13){
       //gets the value on the input field of the date has been submitted; 
       let inputvalue = this.shadowRoot.getElementById("customDate").value; 
-      console.log(inputvalue);
+      let custdate = inputvalue[0].toString() + inputvalue[1].toString();
+      let custmonth = inputvalue[2].toString() + inputvalue[3].toString();
+      let custyear = inputvalue[4].toString() + inputvalue[5].toString() + inputvalue[6].toString() + inputvalue[7].toString();
+
+      //condition to make sure the month and year are within range. 
+      if(custmonth >= 12 || custmonth <= 0 ){
+        alert('Please enter a valid month number from 1 to 12');
+      }
+      else if(custyear > this.maxYear || custyear < this.minYear){
+        alert('Please enter a valid year from 1900 to 2100');
+      }
+      else if( (/[a-zA-Z]/).test(custyear) || (/[a-zA-Z]/).test(custmonth) || (/[a-zA-Z]/).test(custdate)){
+        alert("Please enter numbers ONLY");
+      }
+      else{
+        //Sets the custom dates to the appropriate variables and updates the calendar view accordingly. 
+        this.selecteddate = custdate;
+        this.selectedmonth = custmonth - 1;
+        this.selectedyear = custyear;
+        this.year = custyear; 
+        this.month = custmonth - 1; 
+        this.date = custdate; 
+        this.getDaysinMonth();
+        this._render();
+      }
       
     }
     else{
