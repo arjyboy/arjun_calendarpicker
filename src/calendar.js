@@ -73,13 +73,12 @@ class Calendar extends HTMLElement {
 
         <div class="year">
          <h2 @click="${(z) => this.EditCustomDate()}">${this._setDateTitle()} </h2>
-         <h2><input id ="customDate" maxlength="8" placeholder="ddmmyyyy" @dblclick="${(b) => this.EditCustomDate()}" @keydown = "${(e) => this.setDate(e)}"></h2>
+         <h2><input id ="customDate" maxlength="8" placeholder="ddmmyyyy"  @dblclick="${(b) => this.EditCustomDate()}" @keydown = "${(e) => this.setDate(e)}"></h2>
          
         </div><!-- end of year class -->
 
         
        
-        
 
         <div class = "month">
 
@@ -137,15 +136,17 @@ class Calendar extends HTMLElement {
     this.year = this.fulldate.getFullYear();
 
     //sets the minimum year and maximum year of the calendar. 
-    this._minYear = this.year - 100;
-    this._maxYear = this.year + 100; 
+    this.minYear = this.year;
+    this.maxYear = this.year;
+    
+  
 
     //Creates a new empty array to fill in the dates of the month 
     this.datesArray = new Array();
 
     //Select variables that are used to store the current/selected date by the user. 
-    this.selectedday = this.day;
-    this.selecteddate = this.date; 
+    
+    this.selecteddate = this.date;
     this.selectedmonth = this.month;
     this.selectedyear = this.year; 
 
@@ -165,20 +166,35 @@ class Calendar extends HTMLElement {
    * Follwing functions are setters for 
    */
 
-  set minyear(year){
-    this._minYear = year; 
+  //sets the mininmum year the calendar can go to 
+  set minYear(year){
+    this._minYear = 1970; 
     this._render();
   }
 
-  set maxyear(year){
-    this._maxYear = year; 
+  //sets the maximum year the calendar can go to
+  set maxYear(year){
+    this._maxYear = year + 100; 
     this._render();
   }
 
-  set _selecteddate(date){
-    this.selecteddate = date; 
-    this._render();
-  }
+  // //sets the selected date
+  // set selecteddate(date){
+  //   this._selecteddate = date; 
+  //   this._render();
+  // }
+
+  // //sets the selected month 
+  // set selectedmonth(month){
+  //   this._selectedmonth = month; 
+  //   this._render();
+  // }
+
+  // //sets the selected year
+  // set selectedyear(year){
+  //   this._selectedyear = year; 
+  //   this._render();
+  // }
 
 
 
@@ -190,7 +206,7 @@ class Calendar extends HTMLElement {
   EditCustomDate(){
     this.display = !this.display; 
 
-    
+
     let customeedit = this.shadowRoot.querySelector(`.calendar-info .top .year input`);
     let datebanner = this.shadowRoot.querySelector(`.calendar-info .top .year h2`);
     
@@ -228,9 +244,7 @@ class Calendar extends HTMLElement {
     return date + ' / ' + month + ' / ' + this.selectedyear
   }
 
-  // isCharacterALetter(char) {
-  //   return (/[a-zA-Z]/).test(char);
-  // }
+
 
   /**
    * Function to set the custome date after enter has been pressed
@@ -256,6 +270,7 @@ class Calendar extends HTMLElement {
       }
       else{
         //Sets the custom dates to the appropriate variables and updates the calendar view accordingly. 
+        // this.fulldate = new Date(custyear, custmonth - 1, custdate);
         this.selecteddate = custdate;
         this.selectedmonth = custmonth - 1;
         this.selectedyear = custyear;
@@ -268,7 +283,7 @@ class Calendar extends HTMLElement {
       
     }
     else{
-      console.log("Doesnt work"); 
+      console.log("Event not enter"); 
     }
   }
   
