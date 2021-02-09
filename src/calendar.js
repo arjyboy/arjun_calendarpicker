@@ -72,12 +72,13 @@ class Calendar extends HTMLElement {
       <div class = "top">
 
         <div class="year">
-         <h2>${this._setDateTitle()} <input id ="customDate" maxlength="8" placeholder="ddmmyyyy" @keydown = "${(e) => this.setDate(e)}"></h2>
+         <h2 @click="${(z) => this.EditCustomDate()}">${this._setDateTitle()} </h2>
+         <h2><input id ="customDate" maxlength="8" placeholder="ddmmyyyy" @dblclick="${(b) => this.EditCustomDate()}" @keydown = "${(e) => this.setDate(e)}"></h2>
          
         </div><!-- end of year class -->
 
         
-        <button  class = "edit1" @click ="${(g) => this.EditCustomDate()}">Edit</button>
+       
         
 
         <div class = "month">
@@ -124,9 +125,7 @@ class Calendar extends HTMLElement {
     this._state = 'loading';
 
 
-    //sets the minimum year and maximum year of the calendar. 
-    this.minYear = 1900;
-    this.maxYear = 2100; 
+    
 
     //Gets the current full date in the format ( mm , day, time, timezone, year)
     this.fulldate = new Date();
@@ -136,6 +135,10 @@ class Calendar extends HTMLElement {
     this.date = this.fulldate.getDate();
     this.month = this.fulldate.getMonth();
     this.year = this.fulldate.getFullYear();
+
+    //sets the minimum year and maximum year of the calendar. 
+    this._minYear = this.year - 100;
+    this._maxYear = this.year + 100; 
 
     //Creates a new empty array to fill in the dates of the month 
     this.datesArray = new Array();
@@ -158,6 +161,27 @@ class Calendar extends HTMLElement {
 
   }
 
+  /**
+   * Follwing functions are setters for 
+   */
+
+  set minyear(year){
+    this._minYear = year; 
+    this._render();
+  }
+
+  set maxyear(year){
+    this._maxYear = year; 
+    this._render();
+  }
+
+  set _selecteddate(date){
+    this.selecteddate = date; 
+    this._render();
+  }
+
+
+
 
 
 /**
@@ -165,17 +189,20 @@ class Calendar extends HTMLElement {
  */
   EditCustomDate(){
     this.display = !this.display; 
-    let customeedit = this.shadowRoot.querySelector(`.calendar-info .top .year input`);
-    let button = this.shadowRoot.querySelector(`.calendar-info .top .edit1`);
+
     
+    let customeedit = this.shadowRoot.querySelector(`.calendar-info .top .year input`);
+    let datebanner = this.shadowRoot.querySelector(`.calendar-info .top .year h2`);
     
     if(this.display){
       customeedit.style.display = 'inline';
-      button.style.display = 'none';
+      datebanner.style.display = 'none';
+      
     }
     else{
       customeedit.style.display = 'none';
-      button.innerText = 'Edit';
+      datebanner.style.display = 'inline';
+      
     }
     
 
@@ -218,14 +245,14 @@ class Calendar extends HTMLElement {
       let custyear = inputvalue[4].toString() + inputvalue[5].toString() + inputvalue[6].toString() + inputvalue[7].toString();
 
       //condition to make sure the month and year are within range. 
-      if(custmonth >= 12 || custmonth <= 0 ){
+      if( (/[a-zA-Z]/).test(custyear) || (/[a-zA-Z]/).test(custmonth) || (/[a-zA-Z]/).test(custdate)){
+        alert("Please enter numbers ONLY");
+      }
+      else if(custmonth > 12 || custmonth <= 0 ){
         alert('Please enter a valid month number from 1 to 12');
       }
-      else if(custyear > this.maxYear || custyear < this.minYear){
-        alert('Please enter a valid year from 1900 to 2100');
-      }
-      else if( (/[a-zA-Z]/).test(custyear) || (/[a-zA-Z]/).test(custmonth) || (/[a-zA-Z]/).test(custdate)){
-        alert("Please enter numbers ONLY");
+      else if(custyear > this._maxYear || custyear < this._minYear){
+        alert(`Please enter a valid year from ${this._minYear} to ${this._maxYear}`);
       }
       else{
         //Sets the custom dates to the appropriate variables and updates the calendar view accordingly. 
