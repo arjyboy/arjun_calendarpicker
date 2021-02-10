@@ -168,7 +168,7 @@ class Calendar extends HTMLElement {
 
   //sets the mininmum year the calendar can go to 
   set minYear(year){
-    this._minYear = 1970; 
+    this._minYear = year - 70; 
     this._render();
   }
 
@@ -177,25 +177,6 @@ class Calendar extends HTMLElement {
     this._maxYear = year + 100; 
     this._render();
   }
-
-  // //sets the selected date
-  // set selecteddate(date){
-  //   this._selecteddate = date; 
-  //   this._render();
-  // }
-
-  // //sets the selected month 
-  // set selectedmonth(month){
-  //   this._selectedmonth = month; 
-  //   this._render();
-  // }
-
-  // //sets the selected year
-  // set selectedyear(year){
-  //   this._selectedyear = year; 
-  //   this._render();
-  // }
-
 
 
 
@@ -258,8 +239,8 @@ class Calendar extends HTMLElement {
       let custmonth = inputvalue[2].toString() + inputvalue[3].toString();
       let custyear = inputvalue[4].toString() + inputvalue[5].toString() + inputvalue[6].toString() + inputvalue[7].toString();
 
-      //condition to make sure the month and year are within range. 
-      if( (/[a-zA-Z]/).test(custyear) || (/[a-zA-Z]/).test(custmonth) || (/[a-zA-Z]/).test(custdate)){
+      //validation checks to ensure no letters are being typed
+      if( isNaN(inputvalue)){
         alert("Please enter numbers ONLY");
       }
       else if(custmonth > 12 || custmonth <= 0 ){
@@ -339,7 +320,7 @@ class Calendar extends HTMLElement {
           date = nextday.getDate().toString();
         }
         
-        
+        //Fills the certain position in the array with the correct attribute values 
         this.datesArray[j][i]= {date: date,month: Month, year: Year};
         num = num + 1
 
