@@ -73,7 +73,7 @@ class Calendar extends HTMLElement {
 
         <div class="year">
          <h2 @click="${(z) => this.EditCustomDate()}">${this._setDateTitle()} </h2>
-         <h2><input id ="customDate" maxlength="8" placeholder="ddmmyyyy"  @dblclick="${(b) => this.EditCustomDate()}" @keydown = "${(e) => this.setDate(e)}"></h2>
+         <h2><input id ="customDate" maxlength="10" placeholder="dd/mm/yyyy"  @dblclick="${(b) => this.EditCustomDate()}" @keydown = "${(e) => this.setDate(e)}"></h2>
          
         </div><!-- end of year class -->
 
@@ -186,8 +186,6 @@ class Calendar extends HTMLElement {
  */
   EditCustomDate(){
     this.display = !this.display; 
-
-
     let customeedit = this.shadowRoot.querySelector(`.calendar-info .top .year input`);
     let datebanner = this.shadowRoot.querySelector(`.calendar-info .top .year h2`);
     
@@ -200,8 +198,7 @@ class Calendar extends HTMLElement {
       customeedit.style.display = 'none';
       datebanner.style.display = 'inline';
       
-    }
-    
+    } 
 
   }
 
@@ -228,19 +225,19 @@ class Calendar extends HTMLElement {
 
 
   /**
-   * Function to set the custome date after enter has been pressed
-   * Keycode for numbers is from 48:57
+   * Function to set the custom date after enter has been pressed
    */
   setDate(event){
     if(event.keyCode == 13){
       //gets the value on the input field of the date has been submitted; 
       let inputvalue = this.shadowRoot.getElementById("customDate").value; 
       let custdate = inputvalue[0].toString() + inputvalue[1].toString();
-      let custmonth = inputvalue[2].toString() + inputvalue[3].toString();
-      let custyear = inputvalue[4].toString() + inputvalue[5].toString() + inputvalue[6].toString() + inputvalue[7].toString();
+      let custmonth = inputvalue[3].toString() + inputvalue[4].toString();
+      let custyear = inputvalue[6].toString() + inputvalue[7].toString() + inputvalue[8].toString() + inputvalue[9].toString();
+
 
       //validation checks to ensure no letters are being typed
-      if( isNaN(inputvalue)){
+      if( isNaN(custdate) || isNaN(custmonth) || isNaN(custyear)){
         alert("Please enter numbers ONLY");
       }
       else if(custmonth > 12 || custmonth <= 0 ){
@@ -330,7 +327,7 @@ class Calendar extends HTMLElement {
           num = 1; 
         }
         
-      }//inner for loop ends 
+      }//end of inner loop to load dates
 
     }//end of outter for loop to load dates
 
