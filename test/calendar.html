@@ -15,16 +15,31 @@
         <script type="module">
             suite('calendar tests', function(){
                 var input = fixture('EditCustomDate');
+                test('EditCustomDate() should be true', function(){
+                    input.EditCustomDate(); 
+                    assert.equal(input.EditCustomDate(), true);
+                })
+
 
                 //Test case #1
-
                 //Test case #2
-
                 //Test case #3
+            })
 
-                //Test case #4
+            suite('calendar tests', function(){
+                var input = fixture('_setDateTitle');
 
-                //Test case #5
+                //Test case 1 
+                //Test case 2 
+                //Test case 3
+            })
+
+            suite('calendar tests', function(){
+                var input = fixture('setDate');
+
+                //Test case 1
+                //Test case 2
+                //Test case 3
             })
         </script>
 
@@ -34,198 +49,3 @@
 
 
 
-<!-- <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-
-  <title>Login</title>
-
-  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-  <script src="../node_modules/wct-browser-legacy/browser.js"></script>
-
-    //Import the element to test
-  <script type="module" src="../src/elements/lj-input/lj-input.js"></script>
-</head>
-
-<body>
-  <test-fixture id="BasicView">
-    <template>
-      <lj-input></lj-input>
-    </template>
-  </test-fixture>
-
-  <script type="module">
-    suite('lj-input tests', function() {
-        var input = fixture('BasicView');
-
-        //_renderInputTypes
-        test('_renderInputTypes(null) should be default', function() {
-          input._renderInputTypes(null);
-          assert.equal(input.inputType, 'default');
-        });
-
-        test('_renderInputTypes(undefined) should be default', function() {
-          input._renderInputTypes(undefined);
-          assert.equal(input.inputType, 'default');
-        });
-
-        test('_renderInputTypes(asd) should be default', function() {
-          input._renderInputTypes('asd');
-          assert.equal(input.inputType, 'default');
-        });
-
-        test('_renderInputTypes(textarea) should be textarea', function() {
-          input._renderInputTypes('textarea');
-          assert.equal(input.inputType, 'textarea');
-        });
-
-        test('_renderInputTypes(date) should be date', function() {
-          input._renderInputTypes('date');
-          assert.equal(input.inputType, 'date');
-        });
-
-        test('_renderInputTypes(dropdown) should be dropdown', function() {
-          input._renderInputTypes('dropdown');
-          assert.equal(input.inputType, 'dropdown');
-        });
-        
-        //_renderErrorMessage
-        test('_renderErrorMessage(null) should be false', function() {
-          input._renderErrorMessage(null);
-          assert.equal(input.showErrorMessageFlag, false);
-        });
-
-         test('_renderErrorMessage(undefined) should be false', function() {
-          input._renderErrorMessage(undefined);
-          assert.equal(input.showErrorMessageFlag, false);
-        });
-
-        test('_renderErrorMessage(test) should be true', function() {
-          input._renderErrorMessage('test');
-          assert.equal(input.showErrorMessageFlag, true);
-        });
-
-        test('_renderErrorMessage() should be false', function() {
-          input._renderErrorMessage('');
-          assert.equal(input.showErrorMessageFlag, false);
-        });
-
-        test('_renderErrorMessage(true) should be true', function() {
-          input._renderErrorMessage(true);
-          assert.equal(input.showErrorMessageFlag, true);
-        });
-
-        test('_renderErrorMessage(false) should be false', function() {
-          input._renderErrorMessage(false);
-          assert.equal(input.showErrorMessageFlag, false);
-        });
-
-        //_renderCompactVersion
-        test('_renderCompactVersion(null) should be false', function() {
-          input._renderCompactVersion(null);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact'), false);
-        });
-
-        test('_renderCompactVersion(undefined) should be false', function() {
-          input._renderCompactVersion(undefined);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact'), false);
-        });
-
-        test('_renderCompactVersion() should be false', function() {
-          input._renderCompactVersion('');
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact'), false);
-        });
-
-        test('_renderCompactVersion(test) should be true', function() {
-          input._renderCompactVersion('test');
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact'), true);
-        });
-
-        test('_renderCompactVersion(test) should be false', function() {
-          input._renderCompactVersion(false);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact'), false);
-        });
-
-        test('_renderCompactVersion(test) should be true', function() {
-          input._renderCompactVersion(true);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact'), true);
-        });
-
-        //_renderCompactLiteVersion
-        test('_renderCompactLiteVersion(null) should be false', function() {
-          input._renderCompactLiteVersion(null);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact-lite'), false);
-        });
-
-        test('_renderCompactLiteVersion(undefined) should be false', function() {
-          input._renderCompactLiteVersion(undefined);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact-lite'), false);
-        });
-
-        test('_renderCompactLiteVersion() should be false', function() {
-          input._renderCompactLiteVersion('');
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact-lite'), false);
-        });
-
-        test('_renderCompactLiteVersion(test) should be true', function() {
-          input._renderCompactLiteVersion('test');
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact-lite'), true);
-        });
-
-        test('_renderCompactLiteVersion(false) should be false', function() {
-          input._renderCompactLiteVersion(false);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact-lite'), false);
-        });
-
-        test('_renderCompactLiteVersion(true) should be true', function() {
-          input._renderCompactLiteVersion(true);
-          assert.equal(input.shadowRoot.querySelector('.input-label').classList.contains('input-label--compact-lite'), true);
-        });
-
-        //_renderStrictDropdown
-        test('_renderStrictDropdown(null) should be false', function() {
-          input._renderStrictDropdown(null);
-          assert.equal(input.shadowRoot.querySelector('lj-input-dropdown').hasAttribute('dropdown-strict'), false);
-        });
-
-        test('_renderStrictDropdown(undefined) should be false', function() {
-          input._renderStrictDropdown(undefined);
-          assert.equal(input.shadowRoot.querySelector('lj-input-dropdown').hasAttribute('dropdown-strict'), false);
-        });
-
-        test('_renderStrictDropdown() should be false', function() {
-          input._renderStrictDropdown('');
-          assert.equal(input.shadowRoot.querySelector('lj-input-dropdown').hasAttribute('dropdown-strict'), false);
-        });
-
-        test('_renderStrictDropdown(test) should be false', function() {
-          input._renderStrictDropdown('test');
-          assert.equal(input.shadowRoot.querySelector('lj-input-dropdown').hasAttribute('dropdown-strict'), true);
-        });
-
-        test('_renderStrictDropdown(false) should be false', function() {
-          input._renderStrictDropdown(false);
-          assert.equal(input.shadowRoot.querySelector('lj-input-dropdown').hasAttribute('dropdown-strict'), false);
-        });
-
-        test('_renderStrictDropdown(true) should be true', function() {
-          input._renderStrictDropdown(true);
-          assert.equal(input.shadowRoot.querySelector('lj-input-dropdown').hasAttribute('dropdown-strict'), true);
-        });
-
-        //resetError
-        test('resetError() should be false', function() {
-          input.resetError();
-          assert.equal(input.error, false);
-        });
-
-        //openError
-        test('openError() should be true', function() {
-          input.openError();
-          assert.equal(input.shadowRoot.querySelector('input').classList.contains('input--error'), true);
-        });
-      });
-    </script>
-</body>
-
-</html> -->
