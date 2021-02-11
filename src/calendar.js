@@ -2,7 +2,7 @@ import { html, render } from '../node_modules/lit-html/lit-html.js';
 /**
  * @desc component template
  */
-class Calendar extends HTMLElement {
+export default class Calendar extends HTMLElement {
   /**
      * @desc this is our base template. It sets the basic style such as the element height, width
      * and overall style. Everything happens inside this container
@@ -468,5 +468,5 @@ class Calendar extends HTMLElement {
   }
 
 }
-window.customElements.define('calendar-info', Calendar);
+customElements.define('calendar-info', Calendar);
 
