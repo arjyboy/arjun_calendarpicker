@@ -1,9 +1,7 @@
-
-import { html, render } from '../node_modules/lit-html/lit-html.js';
-const {calendar} = require('../src/calendar.js');
+const {_setDateTitle} = require('../src/calendar.js');
 var assert = require('assert');
 
-describe('App', function(){
+describe('_setDateTitle', function(){
     it('Should return the type of string',function(){
         let thing = _setDateTitle();
         assert.typeOf(thing, 'string');
